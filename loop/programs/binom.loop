@@ -1,0 +1,8 @@
+n := i1;
+k := i2;
+n1 := factorial(n);
+k1 := factorial(k);
+d := sub(n, k);
+d := factorial(d);
+d := mult(d, k1);
+o1 := div(n1, d);

@@ -1,0 +1,8 @@
+y := i1;
+z := i2;
+
+x := 0;
+for w := 1 to z do
+	x := add(x, y);
+done
+o1 := x;

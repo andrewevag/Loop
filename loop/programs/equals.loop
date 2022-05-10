@@ -1,0 +1,7 @@
+x := i1;
+y := i2;
+x1 := sub(x, y);
+x2 := sub(y, x);
+x1 := ifzero(x1);
+x2 := ifzero(x2);
+o1 := and(x1, x2);

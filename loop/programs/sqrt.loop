@@ -1,0 +1,20 @@
+x := i1;
+
+z := 0;
+for w := 1 to x do
+	k1 := mult(w, w);
+
+	k2 := equals(k1, x);
+	for i := 1 to k2 do
+		z := w;
+	done
+
+	k := ifzero(z);
+	k2 := greater(k1, x);
+	k := and(k2, k);
+	for i := 1 to k do 
+		z := w -1 ;
+	done
+
+done
+o1 := z;

@@ -1,0 +1,19 @@
+x := i1;
+y := i2;
+
+x1 := ifnzero(x);
+for w := 1 to x1 do
+	x2 := ifnzero(y);
+	for i := 1 to x2 do
+		o1 := 1;
+	done
+	x2 := ifzero(y);
+	for i := 1 to x2 do
+		o1 := 0;
+	done
+done
+
+x1 := ifzero(x);
+for w := 1 to x1 do
+	o1 := 0;
+done

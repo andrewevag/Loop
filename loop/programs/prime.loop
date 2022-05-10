@@ -1,0 +1,17 @@
+n := i1;
+n1 := sqrt(n);
+z := 0;
+for w := 1 to n1 do
+	w1 := w + 1;
+	k := divisible(w1, n);
+	for i := 1 to k do
+		z := 1;
+-- this is illegal since it's equivalent to a break
+-- in the clean version you do not do n1 := 0; and let it run
+-- but it's slower
+		n1 := 0;
+	done
+
+done
+
+o1 := ifzero(z);

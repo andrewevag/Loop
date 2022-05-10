@@ -1,0 +1,20 @@
+x := i1;
+y := i2;
+
+-- if y == 0 -> output = 0;
+z := ifzero(y);
+for w := 1 to z do
+	o1 := 0;
+done
+
+-- if y != 0 -> perform the division
+
+z := ifnzero(y);
+for w := 1 to z do
+-- actual body of the division
+	r := 1;
+	t := mult(r, y);
+	t := less(r, y);
+
+
+done

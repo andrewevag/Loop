@@ -1,0 +1,39 @@
+n := i1;
+n := n-1;
+
+-- z = 2; the first prime
+z := 1;
+z := z + 1;
+
+
+for w := 1 to n do
+	
+	l := z + 1;
+	u := factorial(z);
+	u := u + 1;
+	d := sub(u, l);
+	f := 0;
+	for i := 0 to d do
+		t := add(i, l);
+		t1 := prime(t);
+		t2 := ifzero(f);
+		t2 := and(t1, t2);
+		for j := 1 to t2 do
+			f := 1;
+			z := t;
+			d := 0;
+		done
+	done
+done
+o1 := z;
+
+-- find an upperbound 
+-- for the nth prime to count to that
+-- p(n) -> nth prime
+-- p(n+1) -> [p(n)+1, p(n)!+1] 
+-- p(1) = 2.
+-- p(n+1) -> least prime in [p(n)+1, p(n)!+1]
+
+-- new idea 
+-- hold the product of primes less than the current prime
+-- and keep that + 1 instead of p(n)!+1

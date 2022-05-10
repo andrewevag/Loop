@@ -1,0 +1,11 @@
+m := i2;
+n := i1;
+z := ifnzero(n);
+for w := 1 to z do
+	m := mod(m, n);
+	o1 := ifzero(m);
+done
+z := ifzero(n);
+for w := 1 to z do
+	o1 := 0;
+done

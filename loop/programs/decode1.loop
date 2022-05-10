@@ -1,0 +1,23 @@
+-- for D1 we need n = z - f^(-1)(floor(f(z)))
+-- f(z) = (sqrt(1 + 8z) - 1) / 2
+-- f^(-1)(z) = (z^2 + z) / 2
+z := i1;
+t := z;
+x := 1;
+x := x + 1;
+x := add(x, x);
+x := add(x, x);
+z := mult(z, x);
+z := z + 1;
+z := sqrt(z);
+z := z - 1;
+x := 1;
+x := x + 1;
+-- z := z div 2;
+z := div(z, x);
+w := mult(z, z);
+z := add(z, w);
+z := div(z, x);
+o1 := sub(t, z);
+
+

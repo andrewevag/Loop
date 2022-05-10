@@ -1,0 +1,10 @@
+x := i1;
+y := i2;
+
+x1 := 1;
+for w := 1 to y do
+	x1 := mult(x1, x);
+done
+o1 := x1;
+
+-- this can be done faster by x <- x * x;

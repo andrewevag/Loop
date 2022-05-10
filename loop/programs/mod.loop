@@ -1,0 +1,16 @@
+x := i1;
+y := i2;
+z := ifzero(y);
+for w := 1 to z do
+	o1 := 0;
+done
+z := ifnzero(y);
+for w := 1 to z do
+	
+	q := div(x, y);
+	p := mult(y, q);
+	r := sub(x, p);
+	o1 := r;	
+done
+
+

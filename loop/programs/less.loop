@@ -1,0 +1,5 @@
+x := i1;
+y := i2;
+z := greater(x, y);
+z1 := equals(x, y);
+z := and(z, z1);

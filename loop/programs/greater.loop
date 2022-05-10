@@ -1,0 +1,4 @@
+x := i1;
+y := i2;
+d := sub(x, y);
+o1 := ifnzero(d);

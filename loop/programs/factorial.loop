@@ -1,0 +1,7 @@
+x := i1;
+z := 1;
+for w := 1 to x do
+	z := mult(z, w);
+done
+
+o1 := z;

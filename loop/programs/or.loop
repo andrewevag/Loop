@@ -1,0 +1,17 @@
+x := i1;
+y := i2;
+z := ifnzero(x);
+for w := 1 to z do
+	o1 := 1;
+done
+z := ifzero(x);
+for w := 1 to z do
+	k := ifnzero(y);
+	for i := 1 to k do
+		o1 := 1;
+	done
+	k := ifzero(y);
+	for i := 1 to k do
+		o1 := 0;
+	done
+done

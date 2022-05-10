@@ -1,0 +1,27 @@
+x := i1;
+y := i2;
+
+z := ifzero(y);
+for w := 1 to z do
+	o1 := 0;
+done
+
+z := ifnzero(y);
+r := 0;
+for w := 1 to z do
+	x1 := x;
+	
+	for i := 1 to x do
+		
+		x2 := greater(x1, y);
+		x3 := equals(x1, y);
+		x2 := or(x2, x3);
+		for j := 1 to x2 do
+			x1 := sub(x1, y); 
+			r := r + 1;
+		done
+
+	done
+	o1 := r;
+done
+
