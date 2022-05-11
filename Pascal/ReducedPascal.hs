@@ -254,15 +254,15 @@ data PascalType = IntegerP
 
 type SymbolTable = Map.Map String PascalType
 
-sem :: PascalProgram -> SymbolTable
+sem :: PascalProgram -> Either SymbolTable String
 sem p = 
     let 
         st = getSymbolTable p 
         programStatements = body p
     in
-        case and $ map (flip sem' st . Right) programStatements of
-            True  -> st
-            False -> error "semantic analysis failed"
+        case sem' (Right (Block programStatements)) st of
+            Nothing  -> Left st
+            Just err -> Right err
 
 getSymbolTable :: PascalProgram -> SymbolTable
 getSymbolTable p = foldl func Map.empty (variables p)
@@ -276,51 +276,58 @@ getSymbolTable p = foldl func Map.empty (variables p)
 -- with nothing indicating correct 
 -- and Just indicating error message
 
-sem' :: Either Expression Statement -> SymbolTable -> Bool
-sem' (Left (Constant c)) st = True
-sem' (Left (Var (Variable v))) st | v `Map.notMember` st = error $ varString v ++ "is not previously defined"
+sem' :: Either Expression Statement -> SymbolTable -> Maybe String
+sem' (Left (Constant c)) st = Nothing
+sem' (Left (Var (Variable v))) st | v `Map.notMember` st = Just $ varString v ++ "is not previously defined"
                                   | otherwise            =
                                       case Map.lookup v st of
-                                          Just (ArrayP _) -> error $ varString v ++ "is defined as an array and cannot be used in expressions"
-                                          Just (IntegerP) -> True
-                                          Nothing         -> error "should not have gotten here"
+                                          Just (ArrayP _) -> Just $ varString v ++ "is defined as an array and cannot be used in expressions"
+                                          Just (IntegerP) -> Nothing
+                                          Nothing         -> Just "should not have gotten here"
 
 sem' (Left (Var (ArrayIndexedAt v e))) st = 
     case Map.lookup v st of
-        Just (ArrayP (_, _)) -> True
-        Just _                  -> error $ varString v ++ "is not an array to be indexed"
-        Nothing                 -> error $ varString v ++ "is not previously defined"
+        Just (ArrayP (_, _)) -> Nothing
+        Just _                  -> Just $ varString v ++ "is not an array to be indexed"
+        Nothing                 -> Just $ varString v ++ "is not previously defined"
 
-sem' (Left (Equals l r))    st = sem' (Left r) st && sem' (Left r) st
-sem' (Left (Different l r)) st = sem' (Left r) st && sem' (Left r) st
-sem' (Left (Less l r))      st = sem' (Left r) st && sem' (Left r) st
-sem' (Left (LessEq l r))    st = sem' (Left r) st && sem' (Left r) st
-sem' (Left (Greater l r))   st = sem' (Left r) st && sem' (Left r) st
-sem' (Left (GreaterEq l r)) st = sem' (Left r) st && sem' (Left r) st
-sem' (Left (Plus l r))      st = sem' (Left r) st && sem' (Left r) st
-sem' (Left (Minus l r))     st = sem' (Left r) st && sem' (Left r) st
-sem' (Left (Mult l r))      st = sem' (Left r) st && sem' (Left r) st
-sem' (Left (Div l r))       st = sem' (Left r) st && sem' (Left r) st
-sem' (Left (Mod l r))       st = sem' (Left r) st && sem' (Left r) st
+sem' (Left (Equals l r))    st = helper [Left l, Left r] st
+sem' (Left (Different l r)) st = helper [Left l, Left r] st
+sem' (Left (Less l r))      st = helper [Left l, Left r] st
+sem' (Left (LessEq l r))    st = helper [Left l, Left r] st
+sem' (Left (Greater l r))   st = helper [Left l, Left r] st
+sem' (Left (GreaterEq l r)) st = helper [Left l, Left r] st
+sem' (Left (Plus l r))      st = helper [Left l, Left r] st
+sem' (Left (Minus l r))     st = helper [Left l, Left r] st
+sem' (Left (Mult l r))      st = helper [Left l, Left r] st
+sem' (Left (Div l r))       st = helper [Left l, Left r] st
+sem' (Left (Mod l r))       st = helper [Left l, Left r] st
+    
 
 -- Starting to semantically analyse statements
-sem' (Right (Block stms)) st = and $ map (flip sem' st . Right) stms
+sem' (Right (Block stms)) st = helper (map Right stms) st
 
-sem' (Right (Assignment v e)) st = sem' (Left $ Var v) st && sem' (Left e) st
+sem' (Right (Assignment v e)) st = helper [Left $ Var v, Left e] st 
 
-sem' (Right (If e s)) st = sem' (Left e) st && sem' (Right s) st
-sem' (Right (IfElse e s s')) st = sem' (Left e) st && sem' (Right s) st && sem' (Right s') st
-sem' (Right (Case e xs)) st = sem' (Left e) st && and (map (flip sem' st . Right . snd) xs)
-sem' (Right (For v (lbound, hbound) stmt)) st = sem' (Right (Assignment v lbound)) st && sem' (Left hbound) st && sem' (Right stmt) st
+sem' (Right (If e s)) st = helper [Left e, Right s] st
+sem' (Right (IfElse e s s')) st = helper [Left e, Right s, Right s'] st
+sem' (Right (Case e xs)) st = helper (Left e : map (Right . snd) xs) st
+sem' (Right (For v (lbound, hbound) stmt)) st = helper [Right (Assignment v lbound), Left hbound, Right stmt] st
 
+helper l st = 
+    case (catMaybes . map (flip sem' st)) l of
+        []    -> Nothing
+        l   -> Just $ unlines l
 
 varString v = "Variable '" ++ v ++ "' "
 
-parseProgram :: IO String -> IO (Maybe (PascalProgram, SymbolTable))
+parseProgram :: IO String -> IO (Either (PascalProgram, SymbolTable) (Either ParseError String) ) 
 parseProgram inp = do
                    s <- inp
                    let p = parse program [] s
                    case p of
-                       Left err -> return Nothing
-                       Right p  -> return $ Just (p, sem p)
+                       Left err -> return (Right $ Left err)
+                       Right p  -> case sem p of 
+                                       Left st   -> return $ Left (p, st)
+                                       Right err -> return $ Right $ Right err
                    
