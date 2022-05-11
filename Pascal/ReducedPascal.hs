@@ -7,6 +7,7 @@ import Text.ParserCombinators.Parsec.Expr
 import Text.ParserCombinators.Parsec.Language
 import qualified Text.ParserCombinators.Parsec.Token as Token
 import qualified Data.Map as Map
+import Data.Maybe
 
 data Variable = Variable String
               | ArrayIndexedAt String Expression
@@ -254,12 +255,35 @@ data PascalType = IntegerP
 type SymbolTable = Map.Map String PascalType
 
 sem :: PascalProgram -> SymbolTable
-sem s = undefined
+sem p = 
+    let 
+        st = getSymbolTable p 
+        programStatements = body p
+    in
+        case and $ map (flip sem' st . Right) programStatements of
+            True  -> st
+            False -> error "semantic analysis failed"
+
+getSymbolTable :: PascalProgram -> SymbolTable
+getSymbolTable p = foldl func Map.empty (variables p)
+    where
+        func prev (IntegerVar v) | isNothing $ Map.lookup v prev = Map.insert v IntegerP prev
+                                 | otherwise                     = error $ varString v ++ "already defined"
+        func prev (ArrayVar v bounds) | isNothing $ Map.lookup v prev = Map.insert v (ArrayP bounds) prev
+                                      | otherwise                     = error $ varString v ++ "already defined"
+
+-- i do not like that sem' is not a total function Maybe fix it to Just String
+-- with nothing indicating correct 
+-- and Just indicating error message
 
 sem' :: Either Expression Statement -> SymbolTable -> Bool
 sem' (Left (Constant c)) st = True
 sem' (Left (Var (Variable v))) st | v `Map.notMember` st = error $ varString v ++ "is not previously defined"
-                                  | otherwise            = True
+                                  | otherwise            =
+                                      case Map.lookup v st of
+                                          Just (ArrayP _) -> error $ varString v ++ "is defined as an array and cannot be used in expressions"
+                                          Just (IntegerP) -> True
+                                          Nothing         -> error "should not have gotten here"
 
 sem' (Left (Var (ArrayIndexedAt v e))) st = 
     case Map.lookup v st of
@@ -290,23 +314,13 @@ sem' (Right (Case e xs)) st = sem' (Left e) st && and (map (flip sem' st . Right
 sem' (Right (For v (lbound, hbound) stmt)) st = sem' (Right (Assignment v lbound)) st && sem' (Left hbound) st && sem' (Right stmt) st
 
 
-
-
-
-
 varString v = "Variable '" ++ v ++ "' "
 
--- data Expression = Equals Expression Expression
---                 | Different Expression Expression
---                 | Less Expression Expression
---                 | LessEq Expression Expression
---                 | Greater Expression Expression
---                 | GreaterEq Expression Expression
---                 | Plus Expression Expression
---                 | Minus Expression Expression
---                 | Mult Expression Expression
---                 | Div Expression Expression
---                 | Mod Expression Expression
---                 | Constant Integer
---                 | Var Variable
-
+parseProgram :: IO String -> IO (Maybe (PascalProgram, SymbolTable))
+parseProgram inp = do
+                   s <- inp
+                   let p = parse program [] s
+                   case p of
+                       Left err -> return Nothing
+                       Right p  -> return $ Just (p, sem p)
+                   
