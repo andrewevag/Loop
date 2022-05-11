@@ -3,7 +3,7 @@
 ```
 	<expr> ::= <simple expression> | <simple expression> <relational operation> <simple expression>
 	
-	<simple expression> ::= <term> | <sign> <term> | <simple expression> <adding operator> <term>
+	<simple expression> ::= <term> | <simple expression> <adding operator> <term>
 	
 	<relational operator> ::= = | <> | < | > | <= | >=
 	<adding operator> ::= + | - 
@@ -11,7 +11,7 @@
 
 	<term> ::= <factor> | <term> <multiplying operator> <factor>
 
-	<multiplying operator> ::= * | / | div | mod
+	<multiplying operator> ::= * | div | mod
 
 	<factor> ::= <variable> | <unsigned constant> | ( <expression> )
 	<unsigned constant> ::= <digit> <unsigned constant> | ε
