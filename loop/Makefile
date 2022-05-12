@@ -3,9 +3,12 @@ BINS = loop
 default: $(BINS)
 
 
-loop: Loop.hs
-	ghc -o $@ $<
+loop: Loop.hs Main.hs
+	ghc -o $@ $^
 
+run : loop
+	./run.sh
+	
 clean:
 	$(RM) *.hi *.o $(BINS)
 

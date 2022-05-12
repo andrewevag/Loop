@@ -130,7 +130,7 @@ statement =     try block
 block :: Parser Statement
 block = do
         reserved "begin"
-        s <- sepBy1 statement (reservedOp ";")
+        s <- endBy1 statement semicolon
         reserved "end"
         return $ Block s
 
@@ -207,12 +207,11 @@ program :: Parser PascalProgram
 program = do
           reserved "program"
           n <- identifier
+          semicolon
           reserved "var"
-          vs <- sepBy1 varDef semicolon
+          vs <- endBy1 varDef semicolon
           -- now for the main body
-          reserved "begin"
-          ss <- sepBy1 statement semicolon
-          reserved "end"
+          Block ss <- block
           reservedOp "."
           return Program {
               name = n,
