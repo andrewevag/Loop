@@ -7,6 +7,7 @@ import System.Path
 import Data.Either
 import Data.Maybe
 import Data.Tree
+import Data.List
 import Control.Monad
 import Text.ParserCombinators.Parsec
 import qualified Data.Map as Map
@@ -29,7 +30,7 @@ toDataTree (Assignment v t) = Node ("Assignment " ++ show v ++ " := " ++ show t)
 toDataTree (ForLoop (v, t) end program) = Node ("ForLoop " ++ show v ++ " := " ++ show t ++ "to " ++ show end) [toDataTree program]
 toDataTree (Concatenation l r) = Node "" [toDataTree l, toDataTree r] 
 instance Show LoopProgram where
-    show = drawTree . toDataTree
+    show x = (drawTree . toDataTree) x ++ "\n\n Printed Program :\n" ++ toProgramStructure [] x 
 
 wsfnb :: GenParser Char st a -> GenParser Char st a
 wsfnb t = do
@@ -152,10 +153,13 @@ forSchema = wsfnb $ do
 
 loopProgram :: GenParser Char st LoopProgram
 loopProgram = wsfnb $ do
-    p <- try assignment <|> forSchema 
-    ps <- many loopProgram
+    p:ps <- many1 (try assignment <|> forSchema)
+    
     return $ foldl Concatenation p ps
 
+-- changeToLeft prev (Concatenation x y) = 
+    
+            
 
 interpret :: LoopProgram -> Map.Map String LoopProgram -> Map.Map Variable Int -> (Map.Map Variable Int)
 interpret a@(Assignment v t) libs prevMap = 
@@ -204,3 +208,24 @@ interpret a@(ForLoop (startvar, startval) endvar innerProgram) libs prevMap =
         loop startvar endvar m'
             
 interpret a@(Concatenation l r) libs prevMap = (interpret r libs . interpret l libs) prevMap
+
+
+
+-- New stuff for the compilation of a program targeting Loop so it can be printed
+-- Directly into loop code from the AST of LoopProgram
+
+toProgramStructure' (ToVariable v) = v
+toProgramStructure' (ToZero) = "0"
+toProgramStructure' (ToOne) = "1"
+toProgramStructure' (ToSucc v) = v ++ " + 1" 
+toProgramStructure' (ToPred v) = v ++ " - 1"
+toProgramStructure' (ToProgram p vars) = p ++ "(" ++ intercalate ", " vars ++ ")"
+
+toProgramStructure indent (Assignment v t) = indent ++ v ++ " := " ++ toProgramStructure' t ++ ";\n"
+toProgramStructure indent (ForLoop (v, t) end inner) = 
+    indent ++ "for " ++ v ++ " := " ++ toProgramStructure' t  ++ " to " ++ end ++ " do\n" ++
+    (toProgramStructure ("    " ++ indent) inner) ++ 
+    indent ++ "done\n"
+toProgramStructure indent (Concatenation l r) = 
+    (toProgramStructure indent l) ++ 
+    (toProgramStructure indent r)
