@@ -1,3 +1,8 @@
+loop/*.o
+loop/*.hi
+Pascal/*.hi
+Pascal/*.o
 *.o
 *.hi
+
 
