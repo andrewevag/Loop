@@ -218,4 +218,7 @@ statementCalc (P.If e stmt) = do
 
 statementCalc (P.IfElse e stmt stmt')
     (res, vars) <- funCallCalc "ifnzero" [expressionCalc e]
+    let var = head vars
+    rstmt <- statementCalc stmt
+    rstmte <- statementCalc stmt'
     
