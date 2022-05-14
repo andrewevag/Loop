@@ -185,16 +185,7 @@ expressionCalc (P.Mod l r) =  modCalc (expressionCalc l) (expressionCalc r)
 expressionCalc (P.Constant i) = constantCalc i
 expressionCalc (P.Var v) = variableCalc v
 
-{-
-  data Statement = Block [Statement]
-               | Assignment Variable Expression
-               | If Expression Statement
-               | IfElse Expression Statement Statement
-               | Case Expression [(Integer, Statement)]
-               | For Variable (Expression, Expression) Statement
-               -- in the for loop (from-lowerBound, to-UpperBound)
-               deriving (Eq, Show)  
--}
+-- Now compiling statements to LoopPrograms 
 statementCalc :: P.Statement -> UniqueCaclulation L.LoopProgram
 statementCalc (P.Block [stmt]) = statementCalc stmt
 statementCalc (P.Block (st:sts)) = do
@@ -210,15 +201,43 @@ statementCalc (P.Assignment (P.Variable v) e) = do
 statementCalc (P.If e stmt) = do
     (res, vars) <- funCallCalc "ifnzero" [expressionCalc e]
     let var = head vars
-    (upperBound, upvar) <- constantCalc 1
-    let uvar = head upvar
     nvar <- decode <$> next
     res' <- statementCalc stmt
-    return (res =>> upperBound =>> L.ForLoop (nvar, L.ToVariable uvar) var res')
+    return (res =>> L.ForLoop (nvar, L.ToOne) var res')
 
-statementCalc (P.IfElse e stmt stmt')
-    (res, vars) <- funCallCalc "ifnzero" [expressionCalc e]
+statementCalc (P.IfElse e stmt stmt') = do
+    -- calculate the codition
+    (res, vars) <- expressionCalc e
     let var = head vars
-    rstmt <- statementCalc stmt
-    rstmte <- statementCalc stmt'
+    -- get two new variables to hold e && not e
+    truevar <- decode <$> next
+    falsevar <- decode <$> next
+    let trueScale = truevar <% ("ifnzero", [var])
+    let falseScale = falsevar <% ("ifzero", [var])
     
+    resif <- statementCalc (P.If (P.Var (P.Variable truevar)) stmt)
+    reselse <- statementCalc (P.If (P.Var (P.Variable falsevar)) stmt')
+    return (res =>> trueScale =>> falseScale =>> resif =>> reselse)
+
+-- Case Expression [(Integer, Statement)]
+statementCalc (P.Case e cases) = undefined
+
+-- For Variable (Expression, Expression) Statement
+statementCalc (P.For (P.Variable v) (lowerBound, upperBound) stmt) = do
+    (resl, resvarl) <- expressionCalc lowerBound
+    let varl = head resvarl
+    (resu, resvaru) <- expressionCalc upperBound
+    let varh = head resvaru
+    -- calculate the difference because all loop forLoops have to start
+    -- at 0 or 1
+    diffvar <- decode <$> next
+    -- calculate the number the forLoop will be executed here we add one
+    -- since in pascal the for loop runs if the loopvariable is equal to the 
+    -- upper bound
+    let difference = diffvar <% ("sub", [varh, varl]) =>> diffvar <== (L.ToSucc diffvar)
+    loopvar <- decode <$> next
+    body <- statementCalc stmt
+    let actualBody = body =>> v <== (L.ToSucc v)
+    return (resl =>> resu =>> difference =>> (v <== L.ToVariable varl) =>> L.ForLoop (loopvar, L.ToOne) diffvar actualBody)
+
+
