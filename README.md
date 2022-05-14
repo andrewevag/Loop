@@ -82,6 +82,7 @@ Comments are lines that start with "--"
 	<range> ::= <unsigned constant> ... <unsigned constant>
 
 ```
+<div style="page-break-after: always;"></div>
 
 # H διαδικασία της μετατροπής
 Θα δείξουμε πως γίνεται η μετατροπή από την περιρισμένη Pascal σε Loop προγράμματα.
@@ -156,6 +157,8 @@ done
 Επιπλέον στην μετατροπή θα χρησιμοποιηθούν identifier strings για τις μεταβλητές της loop. Αυτό δεν έχει διαφορά με την χρήση μόνο xi αφού όλες οι identifier strings μπορούν και αυτές να κωδικοποιηθούν από φυσικούς αριθμούς.
 
 Για τα **arrays** της Pascal θα δημιουργήσουμε μία μεταβλητή για κάθε index του array. Πρόσβαση στα arrays θα κάνουμε υπολογίζοντας το εσωτερικό του [] και στην συνέχεια ένα μεγάλο case όπου για κάθε πιθανό index χρησιμοποιείται η σωστή μεταβλητή.
+
+<div style="page-break-after: always;"></div>
 
 # Παράδειγμα μετατροπής όπως παράχθηκε από το πρόγραμμα
 `hello.pas`
@@ -429,6 +432,8 @@ done
 ```
 
 
+<div style="page-break-after: always;"></div>
+
 # Υλοποίηση σε Haskell
 
 ## Parser and Interpreter for Loop
@@ -680,6 +685,8 @@ toProgramStructure indent (Concatenation l r) =
 
 ```
 ---
+
+<div style="page-break-after: always;"></div>
 
 ## Parser and Semantic Analyser of Pascal
 
@@ -1017,6 +1024,7 @@ parseProgram inp = do
                                        Right err -> return $ Right $ Right err
                    
 ```
+<div style="page-break-after: always;"></div>
 
 ## Pascal To Loop Logic
 ``` haskell
