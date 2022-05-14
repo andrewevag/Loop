@@ -6,7 +6,6 @@ import qualified Data.Map as Map
 
 
 -- Operators to help not writing a lot of stuff
-
 -- ASSIGNMENT TO FUNCTION CALL
 (<%) :: L.Variable -> (String, [L.Variable]) -> L.LoopProgram
 var <% (fname, args) = L.Assignment var (L.ToProgram fname args)
@@ -30,6 +29,16 @@ decode x = ("x" ++ show x)
 -- CALCULATIONS CAN BE COMBINED AND APPLIED THUS 
 -- THE APPLICATIVE AND MONAD DEFINITIONS
 
+-- Αυτό γίνεται γιατί κατά την διάρκεια της μετατροπής
+-- ενός pascal expression χρειαζόμαστε ξεχωριστές μεταβλητές συνέχεια
+-- για ενδοιάμεσα απότελέσματα
+-- 
+-- Το UniqueCalculation φορντίζει να περνιέται ένας ακέραιος μεταξύ των 
+-- calculation μέσω του οποίου δημιουργούνται νέες καινούργιες μεταβλητές
+
+-- Το UniqueCalculation είναι Monad και από αυτό μπορεί να χρησιμοποιηθεί το ειδικό
+-- do-syntax της haskell για τον συνδυασμό μικρότερων calculations σε μεγαλύτερα και πιο σύνθετα
+
 -- A Pascal Program will be defined as a UniqueCalculation of a LoopProgram
 newtype UniqueCaclulation a = Calculation {
     runCalculation :: Integer -> (a, Integer)
@@ -45,8 +54,7 @@ instance Functor (UniqueCaclulation) where
 instance Applicative (UniqueCaclulation) where
     -- pure :: a -> f a
     pure x = Calculation $ \i -> (x, i)
-    -- Calculation b (a -> c) === b -> Integer -> ((a -> c), Integer)
-    -- Calculation b c        === b -> Integer -> (c, Integer)
+    
     (Calculation f) <*> (Calculation p) = Calculation $ \i ->
         let
             (res, next) = f i 
@@ -56,7 +64,6 @@ instance Applicative (UniqueCaclulation) where
 
 instance Monad (UniqueCaclulation) where
     return = pure
-    -- (Integer -> (a, Integer)) -> (a -> (Integer -> (b, Integer))) -> (Integer -> (b, Integer))
     (Calculation p) >>= (f) = 
         Calculation $ \i ->
             let
@@ -102,11 +109,6 @@ funCallCalc s vs = do
     var <- decode <$> next
     return (res =>> var <% (s, resvars), [var])
 
--- Calculate a variable
-variableCalc :: P.Variable -> UniqueCaclulation (L.LoopProgram, [L.Variable])
-variableCalc (P.Variable v) = do
-    return (v <== L.ToVariable v, [v])
--- missing definition for arrays
 
 -- Caclualte if two calculations produce equal results
 equalsCalc :: UniqueCaclulation (L.LoopProgram, [L.Variable]) -> UniqueCaclulation (L.LoopProgram, [L.Variable]) -> UniqueCaclulation (L.LoopProgram, [L.Variable])
@@ -169,75 +171,118 @@ modCalc :: UniqueCaclulation (L.LoopProgram, [L.Variable]) -> UniqueCaclulation 
 modCalc l r = funCallCalc "mod" [l, r]
 
 
--- Do it from the top now
-expressionCalc :: P.Expression -> UniqueCaclulation (L.LoopProgram, [L.Variable])
-expressionCalc (P.Equals l r) = equalsCalc (expressionCalc l) (expressionCalc r)
-expressionCalc (P.Different l r) = differentCalc (expressionCalc l) (expressionCalc r)
-expressionCalc (P.Less l r) = lessCalc (expressionCalc l) (expressionCalc r)
-expressionCalc (P.LessEq l r) = lessEqCalc (expressionCalc l) (expressionCalc r)
-expressionCalc (P.Greater l r) = greaterCalc (expressionCalc l) (expressionCalc r)
-expressionCalc (P.GreaterEq l r) = greaterEqCalc (expressionCalc l) (expressionCalc r)
-expressionCalc (P.Plus l r) = plusCalc (expressionCalc l) (expressionCalc r)
-expressionCalc (P.Minus l r) = minusCalc (expressionCalc l) (expressionCalc r)
-expressionCalc (P.Mult l r) = multCalc (expressionCalc l) (expressionCalc r)
-expressionCalc (P.Div l r) = divCalc (expressionCalc l) (expressionCalc r)
-expressionCalc (P.Mod l r) =  modCalc (expressionCalc l) (expressionCalc r)
-expressionCalc (P.Constant i) = constantCalc i
-expressionCalc (P.Var v) = variableCalc v
+-- This generates 
+programCalc :: (P.PascalProgram, P.SymbolTable) -> UniqueCaclulation L.LoopProgram
+programCalc (p, symtbl) = do
+    let header = (foldl1 (=>>) . map f . Map.assocs) symtbl
+    res <- (statementCalc . P.Block . P.body) p
+    return (header =>> res)
 
--- Now compiling statements to LoopPrograms 
-statementCalc :: P.Statement -> UniqueCaclulation L.LoopProgram
-statementCalc (P.Block [stmt]) = statementCalc stmt
-statementCalc (P.Block (st:sts)) = do
-    res <- statementCalc st 
-    res' <- statementCalc (P.Block sts)
-    return (res =>> res')
+    where
+        f (v, P.IntegerP) = v <== L.ToZero
+        f (n, P.ArrayP (low, high))  | low == high = f ((n ++ show low), P.IntegerP)
+                                     | otherwise   = f ((n ++ show low), P.IntegerP) =>> f (n, P.ArrayP(low+1, high))
 
-statementCalc (P.Assignment (P.Variable v) e) = do
-    (res', var') <- expressionCalc e
-    let var = head var'
-    return (res' =>> v <== L.ToVariable var)
+        expressionCalc :: P.Expression -> UniqueCaclulation (L.LoopProgram, [L.Variable])
+        expressionCalc (P.Equals l r) = equalsCalc (expressionCalc l) (expressionCalc r)
+        expressionCalc (P.Different l r) = differentCalc (expressionCalc l) (expressionCalc r)
+        expressionCalc (P.Less l r) = lessCalc (expressionCalc l) (expressionCalc r)
+        expressionCalc (P.LessEq l r) = lessEqCalc (expressionCalc l) (expressionCalc r)
+        expressionCalc (P.Greater l r) = greaterCalc (expressionCalc l) (expressionCalc r)
+        expressionCalc (P.GreaterEq l r) = greaterEqCalc (expressionCalc l) (expressionCalc r)
+        expressionCalc (P.Plus l r) = plusCalc (expressionCalc l) (expressionCalc r)
+        expressionCalc (P.Minus l r) = minusCalc (expressionCalc l) (expressionCalc r)
+        expressionCalc (P.Mult l r) = multCalc (expressionCalc l) (expressionCalc r)
+        expressionCalc (P.Div l r) = divCalc (expressionCalc l) (expressionCalc r)
+        expressionCalc (P.Mod l r) =  modCalc (expressionCalc l) (expressionCalc r)
+        expressionCalc (P.Constant i) = constantCalc i
+        expressionCalc (P.Var v) = variableCalc v
 
-statementCalc (P.If e stmt) = do
-    (res, vars) <- funCallCalc "ifnzero" [expressionCalc e]
-    let var = head vars
-    nvar <- decode <$> next
-    res' <- statementCalc stmt
-    return (res =>> L.ForLoop (nvar, L.ToOne) var res')
+        -- Now compiling statements to LoopPrograms 
+        statementCalc :: P.Statement -> UniqueCaclulation L.LoopProgram
+        statementCalc (P.Block [stmt]) = statementCalc stmt
+        statementCalc (P.Block (st:sts)) = do
+            res <- statementCalc st 
+            res' <- statementCalc (P.Block sts)
+            return (res =>> res')
 
-statementCalc (P.IfElse e stmt stmt') = do
-    -- calculate the codition
-    (res, vars) <- expressionCalc e
-    let var = head vars
-    -- get two new variables to hold e && not e
-    truevar <- decode <$> next
-    falsevar <- decode <$> next
-    let trueScale = truevar <% ("ifnzero", [var])
-    let falseScale = falsevar <% ("ifzero", [var])
-    
-    resif <- statementCalc (P.If (P.Var (P.Variable truevar)) stmt)
-    reselse <- statementCalc (P.If (P.Var (P.Variable falsevar)) stmt')
-    return (res =>> trueScale =>> falseScale =>> resif =>> reselse)
+        statementCalc (P.Assignment (P.Variable v) e) = do
+            (res', var') <- expressionCalc e
+            let var = head var'
+            return (res' =>> v <== L.ToVariable var)
 
--- Case Expression [(Integer, Statement)]
-statementCalc (P.Case e cases) = undefined
+        statementCalc (P.Assignment (P.ArrayIndexedAt v e) e') = do
+            let Just ( P.ArrayP (low, high)) = Map.lookup v symtbl
+            (res, resvar) <- expressionCalc e'
+            let var = head resvar
+            stsres <- statementCalc (P.Case e [(i, P.Assignment (P.Variable (v ++ show i)) (P.Var (P.Variable var))) | i <- [low..high]])
+            return (res =>> stsres)
 
--- For Variable (Expression, Expression) Statement
-statementCalc (P.For (P.Variable v) (lowerBound, upperBound) stmt) = do
-    (resl, resvarl) <- expressionCalc lowerBound
-    let varl = head resvarl
-    (resu, resvaru) <- expressionCalc upperBound
-    let varh = head resvaru
-    -- calculate the difference because all loop forLoops have to start
-    -- at 0 or 1
-    diffvar <- decode <$> next
-    -- calculate the number the forLoop will be executed here we add one
-    -- since in pascal the for loop runs if the loopvariable is equal to the 
-    -- upper bound
-    let difference = diffvar <% ("sub", [varh, varl]) =>> diffvar <== (L.ToSucc diffvar)
-    loopvar <- decode <$> next
-    body <- statementCalc stmt
-    let actualBody = body =>> v <== (L.ToSucc v)
-    return (resl =>> resu =>> difference =>> (v <== L.ToVariable varl) =>> L.ForLoop (loopvar, L.ToOne) diffvar actualBody)
 
+        statementCalc (P.If e stmt) = do
+            (res, vars) <- funCallCalc "ifnzero" [expressionCalc e]
+            let var = head vars
+            nvar <- decode <$> next
+            res' <- statementCalc stmt
+            return (res =>> L.ForLoop (nvar, L.ToOne) var res')
+
+        statementCalc (P.IfElse e stmt stmt') = do
+            -- calculate the codition
+            (res, vars) <- expressionCalc e
+            let var = head vars
+            -- get two new variables to hold e && not e
+            truevar <- decode <$> next
+            falsevar <- decode <$> next
+            let trueScale = truevar <% ("ifnzero", [var])
+            let falseScale = falsevar <% ("ifzero", [var])
+            
+            resif <- statementCalc (P.If (P.Var (P.Variable truevar)) stmt)
+            reselse <- statementCalc (P.If (P.Var (P.Variable falsevar)) stmt')
+            return (res =>> trueScale =>> falseScale =>> resif =>> reselse)
+
+        -- Case Expression [(Integer, Statement)]
+        statementCalc (P.Case e cases) = do
+            (res, resvar) <- expressionCalc e
+            let var = head resvar
+            casesres <- calculateCases var cases
+            return (res =>> casesres)
+            where
+                calculateCases :: L.Variable -> [(Integer, P.Statement)] -> UniqueCaclulation L.LoopProgram
+                calculateCases v [(i, stmt)] = statementCalc (P.If (P.Equals (P.Constant i) (P.Var (P.Variable v))) stmt)
+                calculateCases v ((i, stmt):cs) = do
+                    bodyres <- statementCalc (P.If (P.Equals (P.Constant i) (P.Var (P.Variable v))) stmt)
+                    res <- calculateCases v cs
+                    return (bodyres =>> res)
+
+
+        -- For Variable (Expression, Expression) Statement
+        statementCalc (P.For (P.Variable v) (lowerBound, upperBound) stmt) = do
+            (resl, resvarl) <- expressionCalc lowerBound
+            let varl = head resvarl
+            (resu, resvaru) <- expressionCalc upperBound
+            let varh = head resvaru
+            -- calculate the difference because all loop forLoops have to start
+            -- at 0 or 1
+            diffvar <- decode <$> next
+            -- calculate the number the forLoop will be executed here we add one
+            -- since in pascal the for loop runs if the loopvariable is equal to the 
+            -- upper bound
+            let difference = diffvar <% ("sub", [varh, varl]) =>> diffvar <== (L.ToSucc diffvar)
+            loopvar <- decode <$> next
+            body <- statementCalc stmt
+            let actualBody = body =>> v <== (L.ToSucc v)
+            return (resl =>> resu =>> difference =>> (v <== L.ToVariable varl) =>> L.ForLoop (loopvar, L.ToOne) diffvar actualBody =>> v <== L.ToPred v)
+
+        -- This is the harder part since we have to access an array
+        variableCalc :: P.Variable -> UniqueCaclulation (L.LoopProgram, [L.Variable])
+        variableCalc (P.Variable v) = do
+            return (v <== L.ToVariable v, [v])
+
+        variableCalc (P.ArrayIndexedAt v e) = do
+            -- This will never fail to match because the semantic analysis
+            -- will be prior to compiling to loop
+            let Just ( P.ArrayP (low, high)) = Map.lookup v symtbl
+            nvar <- decode <$> next
+            res <- statementCalc (P.Case e [(i, P.Assignment (P.Variable nvar) (P.Var (P.Variable (v ++ show i)))) | i <- [low..high]])
+            return (res, [nvar])
 

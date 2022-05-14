@@ -9,6 +9,8 @@ import qualified Text.ParserCombinators.Parsec.Token as Token
 import qualified Data.Map as Map
 import Data.Maybe
 
+-- Datatypes for definining the AST of Reduced Pascal
+
 data Variable = Variable String
               | ArrayIndexedAt String Expression
               deriving (Eq, Show)
@@ -26,6 +28,38 @@ data Expression = Equals Expression Expression
                 | Constant Integer
                 | Var Variable
                 deriving (Eq, Show)
+
+-- This is the datatype to hold a statement 
+-- A program is basically a statement but it needs to
+-- have the variable definition space handled
+data Statement = Block [Statement]
+               | Assignment Variable Expression
+               | If Expression Statement
+               | IfElse Expression Statement Statement
+               | Case Expression [(Integer, Statement)]
+               | For Variable (Expression, Expression) Statement
+               -- in the for loop (from-lowerBound, to-UpperBound)
+               deriving (Eq, Show)
+
+-- The only two types of variables accepted in this
+-- version of pascal
+data PascalType = IntegerP
+                | ArrayP (Integer, Integer) -- it should have a second argument here for the types of the variables in the array but is not needed since we only have Integers and will only allow arrays[integers]
+                deriving (Eq, Show)
+
+data VarDecl = IntegerVar String
+             | ArrayVar String (Integer, Integer)
+             deriving (Eq, Show)
+
+-- The definition for the whole program
+data PascalProgram = Program {
+    name      :: String,      -- Name of the program
+    variables :: [VarDecl],   -- The Variables declared at the start
+    body      :: [Statement]  -- The main body (begin ... end.)
+} deriving (Eq, Show)
+
+type SymbolTable = Map.Map String PascalType
+
 
 languageDef = 
     emptyDef {
@@ -105,17 +139,6 @@ table = [
 
 binary name fun assoc = Infix (do{ reservedOp name; return fun }) assoc
 
--- This is the datatype to hold a statement 
--- A program is basically a statement but it needs to
--- have the variable definition space handled
-data Statement = Block [Statement]
-               | Assignment Variable Expression
-               | If Expression Statement
-               | IfElse Expression Statement Statement
-               | Case Expression [(Integer, Statement)]
-               | For Variable (Expression, Expression) Statement
-               -- in the for loop (from-lowerBound, to-UpperBound)
-               deriving (Eq, Show)
 
 -- Now the parsers for Statements to build Statement Syntax Tree
 statement :: Parser Statement
@@ -191,17 +214,7 @@ for = do
       body <- statement
       return $ For loopVariable (lowerBound, upperBound) body
     
--- We have ways to parse statements now we need to define the program
-data VarDecl = IntegerVar String
-             | ArrayVar String (Integer, Integer)
-             deriving (Eq, Show)
 
--- The definition for the whole program
-data PascalProgram = Program {
-    name      :: String,      -- Name of the program
-    variables :: [VarDecl],   -- The Variables declared at the start
-    body      :: [Statement]  -- The main body (begin ... end.)
-} deriving (Eq, Show)
 
 program :: Parser PascalProgram
 program = do
@@ -242,16 +255,6 @@ type' =     (try $ reserved "integer" >> return IntegerVar)
             reserved "integer"
             return $ flip ArrayVar (from, to)
 
--- The parser program parses correctly the program
--- but it needs to be checked semantically
-
--- The only two types of variables accepted in this
--- version of pascal
-data PascalType = IntegerP
-                | ArrayP (Integer, Integer) -- it should have a second argument here for the types of the variables in the array but is not needed since we only have Integers and will only allow arrays[integers]
-                deriving (Eq, Show)
-
-type SymbolTable = Map.Map String PascalType
 
 sem :: PascalProgram -> Either SymbolTable String
 sem p = 
@@ -271,9 +274,6 @@ getSymbolTable p = foldl func Map.empty (variables p)
         func prev (ArrayVar v bounds) | isNothing $ Map.lookup v prev = Map.insert v (ArrayP bounds) prev
                                       | otherwise                     = error $ varString v ++ "already defined"
 
--- i do not like that sem' is not a total function Maybe fix it to Just String
--- with nothing indicating correct 
--- and Just indicating error message
 
 sem' :: Either Expression Statement -> SymbolTable -> Maybe String
 sem' (Left (Constant c)) st = Nothing

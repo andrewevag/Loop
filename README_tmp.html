@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>README.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="loop">Loop</h1>
+<p>Μετατροπή απλοποιημένης έκδοσης της Pascal σε Loop και διερμηνέας για την Loop, μία γλώσσα ισοδύναμη με τις πρωταρχικά αναδρομικές συναρτήσεις.</p>
+<p>A reduced version of Pascal to Loop and an interpreter for Loop, a language equivalent to primitive recursive functions.</p>
+<h2 id="loop-syntax">Loop Syntax</h2>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">loop_program</span>&gt;</span> ::= <span class="hljs-tag">&lt;<span class="hljs-name">assignment</span>&gt;</span> ;<span class="hljs-tag">&lt;<span class="hljs-name">loop_program</span>&gt;</span>| <span class="hljs-tag">&lt;<span class="hljs-name">for_loop</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">loop_program</span>&gt;</span> | ε
+<span class="hljs-tag">&lt;<span class="hljs-name">assignment</span>&gt;</span> ::= <span class="hljs-tag">&lt;<span class="hljs-name">var</span>&gt;</span> := 0 | <span class="hljs-tag">&lt;<span class="hljs-name">var</span>&gt;</span> := 1 | <span class="hljs-tag">&lt;<span class="hljs-name">var</span>&gt;</span> := <span class="hljs-tag">&lt;<span class="hljs-name">var</span>&gt;</span> | <span class="hljs-tag">&lt;<span class="hljs-name">var</span>&gt;</span> := <span class="hljs-tag">&lt;<span class="hljs-name">var</span>&gt;</span> + 1 | <span class="hljs-tag">&lt;<span class="hljs-name">var</span>&gt;</span> := <span class="hljs-tag">&lt;<span class="hljs-name">var</span>&gt;</span> - 1
+
+<span class="hljs-tag">&lt;<span class="hljs-name">assignment</span>&gt;</span> ::= <span class="hljs-tag">&lt;<span class="hljs-name">var</span>&gt;</span> := <span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span>(<span class="hljs-tag">&lt;<span class="hljs-name">variable_list</span>&gt;</span>)
+<span class="hljs-tag">&lt;<span class="hljs-name">variable_list</span>&gt;</span> ::= <span class="hljs-tag">&lt;<span class="hljs-name">var</span>&gt;</span> , <span class="hljs-tag">&lt;<span class="hljs-name">variable_list</span>&gt;</span> | <span class="hljs-tag">&lt;<span class="hljs-name">var</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">for_loop</span>&gt;</span> ::= for <span class="hljs-tag">&lt;<span class="hljs-name">var</span>&gt;</span> := 0 to <span class="hljs-tag">&lt;<span class="hljs-name">var</span>&gt;</span> do <span class="hljs-tag">&lt;<span class="hljs-name">loop_program</span>&gt;</span> done
+<span class="hljs-tag">&lt;<span class="hljs-name">for_loop</span>&gt;</span> ::= for <span class="hljs-tag">&lt;<span class="hljs-name">var</span>&gt;</span> := 1 to <span class="hljs-tag">&lt;<span class="hljs-name">var</span>&gt;</span> do <span class="hljs-tag">&lt;<span class="hljs-name">loop_program</span>&gt;</span> done
+
+</div></code></pre>
+<p>Comments are lines that start with &quot;--&quot;</p>
+<h2 id="%CE%B8%CE%AD%CE%BC%CE%B1%CF%84%CE%B1-%CF%83%CE%B7%CE%BC%CE%B1%CF%83%CE%B9%CE%BF%CE%BB%CE%BF%CE%B3%CE%AF%CE%B1%CF%82---semantic-issues">Θέματα Σημασιολογίας - semantic issues</h2>
+<hr>
+<ul>
+<li>Τα προγράμματα που θέλουν input χρησιμοποιούν τις μεταβλητές i1, i2, i3, ...</li>
+<li>Τα προγράμματα που θέλουν να παράξουν αποτέλεσμα γράφουν στην μεταβλητή o1</li>
+<li>Προγράμματα που χρησιμοποιούν άλλα προγράμματα πχ x := add(x, y) πρέπει να βάλουν επιπλέον όρισμα στον interpreter --lib add.loop με το ορισμό του προγράμματος που κλήθηκε.</li>
+</ul>
+<hr>
+<ul>
+<li>Programs that need input use the variables i1, i2, i3, ...</li>
+<li>Programs that write output write to the variable o1</li>
+<li>Programs that get have a definition of the type x := add(x, y) need to provide<br>
+--lib add.loop with the definition of the add program of the function exactly</li>
+</ul>
+<h1 id="pascal-reduced-syntax-for-translating-to-loop">Pascal Reduced Syntax for translating to loop</h1>
+<pre class="hljs"><code><div>	<span class="hljs-tag">&lt;<span class="hljs-name">expr</span>&gt;</span> ::= <span class="hljs-tag">&lt;<span class="hljs-name">simple</span> <span class="hljs-attr">expression</span>&gt;</span> | <span class="hljs-tag">&lt;<span class="hljs-name">simple</span> <span class="hljs-attr">expression</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">relational</span> <span class="hljs-attr">operation</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">simple</span> <span class="hljs-attr">expression</span>&gt;</span>
+	
+	<span class="hljs-tag">&lt;<span class="hljs-name">simple</span> <span class="hljs-attr">expression</span>&gt;</span> ::= <span class="hljs-tag">&lt;<span class="hljs-name">term</span>&gt;</span> | <span class="hljs-tag">&lt;<span class="hljs-name">simple</span> <span class="hljs-attr">expression</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">adding</span> <span class="hljs-attr">operator</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">term</span>&gt;</span>
+	
+	<span class="hljs-tag">&lt;<span class="hljs-name">relational</span> <span class="hljs-attr">operator</span>&gt;</span> ::= = | <span class="hljs-tag">&lt;&gt;</span> | <span class="hljs-tag">&lt; | &gt;</span> | <span class="hljs-tag">&lt;<span class="hljs-name">=</span> | &gt;</span>=
+	<span class="hljs-tag">&lt;<span class="hljs-name">adding</span> <span class="hljs-attr">operator</span>&gt;</span> ::= + | - 
+	<span class="hljs-tag">&lt;<span class="hljs-name">sign</span>&gt;</span> ::= + | -
+
+	<span class="hljs-tag">&lt;<span class="hljs-name">term</span>&gt;</span> ::= <span class="hljs-tag">&lt;<span class="hljs-name">factor</span>&gt;</span> | <span class="hljs-tag">&lt;<span class="hljs-name">term</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">multiplying</span> <span class="hljs-attr">operator</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">factor</span>&gt;</span>
+
+	<span class="hljs-tag">&lt;<span class="hljs-name">multiplying</span> <span class="hljs-attr">operator</span>&gt;</span> ::= * | div | mod
+
+	<span class="hljs-tag">&lt;<span class="hljs-name">factor</span>&gt;</span> ::= <span class="hljs-tag">&lt;<span class="hljs-name">variable</span>&gt;</span> | <span class="hljs-tag">&lt;<span class="hljs-name">unsigned</span> <span class="hljs-attr">constant</span>&gt;</span> | ( <span class="hljs-tag">&lt;<span class="hljs-name">expression</span>&gt;</span> )
+	<span class="hljs-tag">&lt;<span class="hljs-name">unsigned</span> <span class="hljs-attr">constant</span>&gt;</span> ::= <span class="hljs-tag">&lt;<span class="hljs-name">digit</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">unsigned</span> <span class="hljs-attr">constant</span>&gt;</span> | ε
+	
+	<span class="hljs-tag">&lt;<span class="hljs-name">digit</span>&gt;</span> ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+
+	<span class="hljs-tag">&lt;<span class="hljs-name">statement</span>&gt;</span> ::= <span class="hljs-tag">&lt;<span class="hljs-name">assignment</span> <span class="hljs-attr">statement</span>&gt;</span> | <span class="hljs-tag">&lt;<span class="hljs-name">structured</span> <span class="hljs-attr">statement</span>&gt;</span>
+	
+	<span class="hljs-tag">&lt;<span class="hljs-name">assignment</span> <span class="hljs-attr">statement</span>&gt;</span> ::= <span class="hljs-tag">&lt;<span class="hljs-name">variable</span>&gt;</span> := <span class="hljs-tag">&lt;<span class="hljs-name">expression</span>&gt;</span>
+	
+	<span class="hljs-tag">&lt;<span class="hljs-name">variable</span>&gt;</span> ::= <span class="hljs-tag">&lt;<span class="hljs-name">identifier</span>&gt;</span> | <span class="hljs-tag">&lt;<span class="hljs-name">identifer</span>&gt;</span> [ <span class="hljs-tag">&lt;<span class="hljs-name">expression</span>&gt;</span> ]
+	
+	<span class="hljs-tag">&lt;<span class="hljs-name">structured</span> <span class="hljs-attr">statement</span>&gt;</span> ::= <span class="hljs-tag">&lt;<span class="hljs-name">compound</span> <span class="hljs-attr">statement</span>&gt;</span> | <span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">statement</span>&gt;</span> | <span class="hljs-tag">&lt;<span class="hljs-name">case</span> <span class="hljs-attr">element</span>&gt;</span> | <span class="hljs-tag">&lt;<span class="hljs-name">for</span> <span class="hljs-attr">statement</span>&gt;</span>
+
+	<span class="hljs-tag">&lt;<span class="hljs-name">compound</span> <span class="hljs-attr">statement</span>&gt;</span> ::= begin <span class="hljs-tag">&lt;<span class="hljs-name">statement</span>&gt;</span> {; <span class="hljs-tag">&lt;<span class="hljs-name">statement</span>&gt;</span>} end;
+
+	<span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">statement</span>&gt;</span> ::= if <span class="hljs-tag">&lt;<span class="hljs-name">expr</span>&gt;</span> then <span class="hljs-tag">&lt;<span class="hljs-name">statement</span>&gt;</span> | if <span class="hljs-tag">&lt;<span class="hljs-name">expr</span>&gt;</span> then <span class="hljs-tag">&lt;<span class="hljs-name">statement</span>&gt;</span> else <span class="hljs-tag">&lt;<span class="hljs-name">statement</span>&gt;</span>
+
+	<span class="hljs-tag">&lt;<span class="hljs-name">case</span> <span class="hljs-attr">element</span>&gt;</span> ::= case <span class="hljs-tag">&lt;<span class="hljs-name">expression</span>&gt;</span> of <span class="hljs-tag">&lt;<span class="hljs-name">case</span> <span class="hljs-attr">list</span> <span class="hljs-attr">elem</span>&gt;</span> end
+
+	<span class="hljs-tag">&lt;<span class="hljs-name">case</span> <span class="hljs-attr">list</span> <span class="hljs-attr">elem</span>&gt;</span> ::= <span class="hljs-tag">&lt;<span class="hljs-name">unsigned</span> <span class="hljs-attr">constant</span>&gt;</span> : <span class="hljs-tag">&lt;<span class="hljs-name">statement</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">case</span> <span class="hljs-attr">list</span> <span class="hljs-attr">elem</span>&gt;</span> | ε
+
+
+	<span class="hljs-tag">&lt;<span class="hljs-name">for</span> <span class="hljs-attr">statement</span>&gt;</span> ::= for <span class="hljs-tag">&lt;<span class="hljs-name">identifier</span>&gt;</span> := <span class="hljs-tag">&lt;<span class="hljs-name">expression</span>&gt;</span> to <span class="hljs-tag">&lt;<span class="hljs-name">expression</span>&gt;</span> do <span class="hljs-tag">&lt;<span class="hljs-name">statement</span>&gt;</span>
+
+	<span class="hljs-tag">&lt;<span class="hljs-name">program</span>&gt;</span> ::= program <span class="hljs-tag">&lt;<span class="hljs-name">identifier</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">var</span> <span class="hljs-attr">definitions</span>&gt;</span> begin <span class="hljs-tag">&lt;<span class="hljs-name">statement</span>&gt;</span> {; <span class="hljs-tag">&lt;<span class="hljs-name">statement</span>&gt;</span>} end.
+
+	<span class="hljs-tag">&lt;<span class="hljs-name">var</span> <span class="hljs-attr">definitions</span>&gt;</span> ::= var <span class="hljs-tag">&lt;<span class="hljs-name">variable</span> <span class="hljs-attr">declaration</span>&gt;</span> {; <span class="hljs-tag">&lt;<span class="hljs-name">variable</span> <span class="hljs-attr">declaration</span>&gt;</span>} | ε
+
+	<span class="hljs-tag">&lt;<span class="hljs-name">var</span> <span class="hljs-attr">definition</span>&gt;</span> ::= <span class="hljs-tag">&lt;<span class="hljs-name">identifier</span>&gt;</span> {, <span class="hljs-tag">&lt;<span class="hljs-name">identifier</span>&gt;</span>} : <span class="hljs-tag">&lt;<span class="hljs-name">type</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">type</span>&gt;</span> ::= integer | array[<span class="hljs-tag">&lt;<span class="hljs-name">range</span>&gt;</span>] of <span class="hljs-tag">&lt;<span class="hljs-name">integer</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">range</span>&gt;</span> ::= <span class="hljs-tag">&lt;<span class="hljs-name">unsigned</span> <span class="hljs-attr">constant</span>&gt;</span> ... <span class="hljs-tag">&lt;<span class="hljs-name">unsigned</span> <span class="hljs-attr">constant</span>&gt;</span>
+
+</div></code></pre>
+<h1 id="h-%CE%B4%CE%B9%CE%B1%CE%B4%CE%B9%CE%BA%CE%B1%CF%83%CE%AF%CE%B1-%CF%84%CE%B7%CF%82-%CE%BC%CE%B5%CF%84%CE%B1%CF%84%CF%81%CE%BF%CF%80%CE%AE%CF%82">H διαδικασία της μετατροπής</h1>
+<p>Θα δείξουμε πως γίνεται η μετατροπή από την περιρισμένη Pascal σε Loop προγράμματα.</p>
+<p>Η ισοδυναμία των δύο βασίζεται στο γεγονός<br>
+ότι ένα <strong>expression</strong> μπορεί να υπολογιστεί διατρέχοντας το συντακτικό του δέντρο και αποθηκεύοντας προσωρινά δεδομένα σε ξεχωριστές μεταβλητές.</p>
+<p>Για παράδειγμα το Plus(Constant 3, Constant 4) θα γίνει</p>
+<pre class="hljs"><code><div>x1 := 1; 
+x1 := x1 + 1;
+x1 := x1 + 1;
+x2 := 1;
+x2 := x2 + 1;
+x2 := x2 + 1;
+x2 := x2 + 1;
+x3 := add(x1, x2)
+</div></code></pre>
+<p>και το αποτέλεσμα του expression βρίσκεται στην μεταβλητή x3.</p>
+<p>Οι σταθερές μπορούν να υπολογιστούν και αποδοτικότερα<br>
+με διαδοχικούς διπλασιασμούς ή και πολλαπλασιασμούς μικρότερων σταθερών αλλά θα παραμείνουν έτσι λόγω απλότητας.</p>
+<p>Τα <strong>if statements</strong> μπορούν να γίνουν ισοδύναμα στην loop θεωρώντας τις τιμές bool ως αριθμούς στο {0, 1}.<br>
+Υπολογίζουμε το expression μέσα στο if (εδώ res) και κάνουμε</p>
+<pre class="hljs"><code><div>temp := ifnzero(res);
+for w := 1 to temp do
+	...body...
+done
+</div></code></pre>
+<p>Τα <strong>case statements</strong> μπορούν επίσης να μοντελοποιηθούν μεσω διαδοχικών <strong>if statements</strong> και άρα δεν διαφέρουν από τα <strong>if statements</strong>.</p>
+<p>Τέλος το <strong>for statement</strong> είναι ισοδύναμο στην loop αν βρεθεί το εύρος στο οποίο θα γίνει η επανάληψη (δηλαδή το κάτω και το πάνω όριο αποτελούν <strong>expressions</strong>), τοποθετηθεί το κάτω εύρος σε μία μεταβλητή και κάθε φορά προστίθεται σε αυτήν το <em>loop variable</em> ώστε να έχουμε αυτή ως τον πραγματικό <em>loop counter</em>.<br>
+Για παράδειγμα το</p>
+<pre class="hljs"><code><div>for w := 3 to 2*2 do
+...;
+</div></code></pre>
+<p>θα γίνει</p>
+<pre class="hljs"><code><div>-- Calculate (3)
+x0 := 0;
+x0 := x0 + 1;
+x0 := x0 + 1;
+x0 := x0 + 1;
+-- Calculate 2*2
+x1 := 0;
+x1 := x1 + 1;
+x1 := x1 + 1;
+x2 := 0;
+x2 := x2 + 1;
+x2 := x2 + 1;
+x3 := mult(x1, x2);
+
+-- calculate the difference from upper bound to lower bound
+x4 := sub(x3, x1);
+x4 := x4 + 1;
+
+-- w := 3;
+w := x0;
+for x5 := 1 to x4 do
+	...
+	-- fix w to represent current counter
+	w := w + 1; 
+done
+
+</div></code></pre>
+<p>Στην μετατροπή δεν θα χρησιμοποιηθούν αρνητικοί αριθμοί παρότι αυτοί μπορούν να κωδικοποιηθούν από τους θετικούς ή να χρησιμοποηθεί για κάθε xi μία μεταβλητή xip με τιμές στο {0, 1} που καθορίζει το πρόσημο της xi.<br>
+Επιπλέον στην μετατροπή θα χρησιμοποιηθούν identifier strings για τις μεταβλητές της loop. Αυτό δεν έχει διαφορά με την χρήση μόνο xi αφού όλες οι identifier strings μπορούν και αυτές να κωδικοποιηθούν από φυσικούς αριθμούς.</p>
+<p>Για τα <strong>arrays</strong> της Pascal θα δημιουργήσουμε μία μεταβλητή για κάθε index του array. Πρόσβαση στα arrays θα κάνουμε υπολογίζοντας το εσωτερικό του [] και στην συνέχεια ένα μεγάλο case όπου για κάθε πιθανό index χρησιμοποιείται η σωστή μεταβλητή.</p>
+<h1 id="%CF%80%CE%B1%CF%81%CE%AC%CE%B4%CE%B5%CE%B9%CE%B3%CE%BC%CE%B1-%CE%BC%CE%B5%CF%84%CE%B1%CF%84%CF%81%CE%BF%CF%80%CE%AE%CF%82-%CF%8C%CF%80%CF%89%CF%82-%CF%80%CE%B1%CF%81%CE%AC%CF%87%CE%B8%CE%B7%CE%BA%CE%B5-%CE%B1%CF%80%CF%8C-%CF%84%CE%BF-%CF%80%CF%81%CF%8C%CE%B3%CF%81%CE%B1%CE%BC%CE%BC%CE%B1">Παράδειγμα μετατροπής όπως παράχθηκε από το πρόγραμμα</h1>
+<p><code>hello.pas</code></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">program</span> hello;
+
+<span class="hljs-keyword">var</span>
+	x, y : integer;
+	z : <span class="hljs-keyword">array</span>[<span class="hljs-number">0</span>...<span class="hljs-number">10</span>] <span class="hljs-keyword">of</span> integer;
+    w : integer;
+<span class="hljs-keyword">begin</span>
+	x := <span class="hljs-number">12</span>;
+	y := x <span class="hljs-keyword">div</span> <span class="hljs-number">2</span>;
+	z[x-y] := x + y * <span class="hljs-number">4</span>;
+	<span class="hljs-keyword">for</span> w := <span class="hljs-number">1</span> <span class="hljs-keyword">to</span> <span class="hljs-number">3</span>*<span class="hljs-number">3</span> <span class="hljs-keyword">do</span>
+	<span class="hljs-keyword">begin</span>
+		x := x * <span class="hljs-number">2</span>;
+	<span class="hljs-keyword">end</span>;
+	<span class="hljs-keyword">if</span> x &gt; <span class="hljs-number">10</span> <span class="hljs-keyword">then</span>
+		x := <span class="hljs-number">9</span>;
+<span class="hljs-keyword">end</span>.
+
+</div></code></pre>
+<p>Το παραγόμενο loop πρόγραμμα</p>
+<p>Παρατηρούμε ακολουθία των 10 ifs που αντιπροσωπεύει τις 10 δυνατές τιμές που μπορεί να γίνει η ανάθεση λόγω index του array z</p>
+<p><code>hello.loop</code></p>
+<pre class="hljs"><code><div>w := 0;
+x := 0;
+y := 0;
+z0 := 0;
+z1 := 0;
+z2 := 0;
+z3 := 0;
+z4 := 0;
+z5 := 0;
+z6 := 0;
+z7 := 0;
+z8 := 0;
+z9 := 0;
+z10 := 0;
+x0 := 0;
+x0 := x0 + 1;
+x0 := x0 + 1;
+x0 := x0 + 1;
+x0 := x0 + 1;
+x0 := x0 + 1;
+x0 := x0 + 1;
+x0 := x0 + 1;
+x0 := x0 + 1;
+x0 := x0 + 1;
+x0 := x0 + 1;
+x0 := x0 + 1;
+x0 := x0 + 1;
+x := x0;
+x := x;
+x1 := 0;
+x1 := x1 + 1;
+x1 := x1 + 1;
+x2 := div(x, x1);
+y := x2;
+x := x;
+y := y;
+x3 := 0;
+x3 := x3 + 1;
+x3 := x3 + 1;
+x3 := x3 + 1;
+x3 := x3 + 1;
+x4 := mult(y, x3);
+x5 := add(x, x4);
+x := x;
+y := y;
+x6 := sub(x, y);
+x7 := 0;
+x6 := x6;
+x8 := equals(x7, x6);
+x9 := ifnzero(x8);
+for x10 := 1 to x9 do
+    x5 := x5;
+    z0 := x5;
+done
+x11 := 0;
+x11 := x11 + 1;
+x6 := x6;
+x12 := equals(x11, x6);
+x13 := ifnzero(x12);
+for x14 := 1 to x13 do
+    x5 := x5;
+    z1 := x5;
+done
+x15 := 0;
+x15 := x15 + 1;
+x15 := x15 + 1;
+x6 := x6;
+x16 := equals(x15, x6);
+x17 := ifnzero(x16);
+for x18 := 1 to x17 do
+    x5 := x5;
+    z2 := x5;
+done
+x19 := 0;
+x19 := x19 + 1;
+x19 := x19 + 1;
+x19 := x19 + 1;
+x6 := x6;
+x20 := equals(x19, x6);
+x21 := ifnzero(x20);
+for x22 := 1 to x21 do
+    x5 := x5;
+    z3 := x5;
+done
+x23 := 0;
+x23 := x23 + 1;
+x23 := x23 + 1;
+x23 := x23 + 1;
+x23 := x23 + 1;
+x6 := x6;
+x24 := equals(x23, x6);
+x25 := ifnzero(x24);
+for x26 := 1 to x25 do
+    x5 := x5;
+    z4 := x5;
+done
+x27 := 0;
+x27 := x27 + 1;
+x27 := x27 + 1;
+x27 := x27 + 1;
+x27 := x27 + 1;
+x27 := x27 + 1;
+x6 := x6;
+x28 := equals(x27, x6);
+x29 := ifnzero(x28);
+for x30 := 1 to x29 do
+    x5 := x5;
+    z5 := x5;
+done
+x31 := 0;
+x31 := x31 + 1;
+x31 := x31 + 1;
+x31 := x31 + 1;
+x31 := x31 + 1;
+x31 := x31 + 1;
+x31 := x31 + 1;
+x6 := x6;
+x32 := equals(x31, x6);
+x33 := ifnzero(x32);
+for x34 := 1 to x33 do
+    x5 := x5;
+    z6 := x5;
+done
+x35 := 0;
+x35 := x35 + 1;
+x35 := x35 + 1;
+x35 := x35 + 1;
+x35 := x35 + 1;
+x35 := x35 + 1;
+x35 := x35 + 1;
+x35 := x35 + 1;
+x6 := x6;
+x36 := equals(x35, x6);
+x37 := ifnzero(x36);
+for x38 := 1 to x37 do
+    x5 := x5;
+    z7 := x5;
+done
+x39 := 0;
+x39 := x39 + 1;
+x39 := x39 + 1;
+x39 := x39 + 1;
+x39 := x39 + 1;
+x39 := x39 + 1;
+x39 := x39 + 1;
+x39 := x39 + 1;
+x39 := x39 + 1;
+x6 := x6;
+x40 := equals(x39, x6);
+x41 := ifnzero(x40);
+for x42 := 1 to x41 do
+    x5 := x5;
+    z8 := x5;
+done
+x43 := 0;
+x43 := x43 + 1;
+x43 := x43 + 1;
+x43 := x43 + 1;
+x43 := x43 + 1;
+x43 := x43 + 1;
+x43 := x43 + 1;
+x43 := x43 + 1;
+x43 := x43 + 1;
+x43 := x43 + 1;
+x6 := x6;
+x44 := equals(x43, x6);
+x45 := ifnzero(x44);
+for x46 := 1 to x45 do
+    x5 := x5;
+    z9 := x5;
+done
+x47 := 0;
+x47 := x47 + 1;
+x47 := x47 + 1;
+x47 := x47 + 1;
+x47 := x47 + 1;
+x47 := x47 + 1;
+x47 := x47 + 1;
+x47 := x47 + 1;
+x47 := x47 + 1;
+x47 := x47 + 1;
+x47 := x47 + 1;
+x6 := x6;
+x48 := equals(x47, x6);
+x49 := ifnzero(x48);
+for x50 := 1 to x49 do
+    x5 := x5;
+    z10 := x5;
+done
+x51 := 0;
+x51 := x51 + 1;
+x52 := 0;
+x52 := x52 + 1;
+x52 := x52 + 1;
+x52 := x52 + 1;
+x53 := 0;
+x53 := x53 + 1;
+x53 := x53 + 1;
+x53 := x53 + 1;
+x54 := mult(x52, x53);
+x55 := sub(x54, x51);
+x55 := x55 + 1;
+w := x51;
+for x56 := 1 to x55 do
+    x := x;
+    x57 := 0;
+    x57 := x57 + 1;
+    x57 := x57 + 1;
+    x58 := mult(x, x57);
+    x := x58;
+    w := w + 1;
+done
+w := w - 1;
+x := x;
+x59 := 0;
+x59 := x59 + 1;
+x59 := x59 + 1;
+x59 := x59 + 1;
+x59 := x59 + 1;
+x59 := x59 + 1;
+x59 := x59 + 1;
+x59 := x59 + 1;
+x59 := x59 + 1;
+x59 := x59 + 1;
+x59 := x59 + 1;
+x60 := greater(x, x59);
+x61 := ifnzero(x60);
+for x62 := 1 to x61 do
+    x63 := 0;
+    x63 := x63 + 1;
+    x63 := x63 + 1;
+    x63 := x63 + 1;
+    x63 := x63 + 1;
+    x63 := x63 + 1;
+    x63 := x63 + 1;
+    x63 := x63 + 1;
+    x63 := x63 + 1;
+    x63 := x63 + 1;
+    x := x63;
+done
+
+</div></code></pre>
+<h1 id="%CF%85%CE%BB%CE%BF%CF%80%CE%BF%CE%AF%CE%B7%CF%83%CE%B7-%CF%83%CE%B5-haskell">Υλοποίηση σε Haskell</h1>
+<h2 id="parser-and-interpreter-for-loop">Parser and Interpreter for Loop</h2>
+<pre class="hljs"><code><div><span class="hljs-keyword">module</span> Loop <span class="hljs-keyword">where</span>
+
+<span class="hljs-keyword">import</span> System.IO
+<span class="hljs-keyword">import</span> System.Environment
+<span class="hljs-keyword">import</span> System.Exit
+<span class="hljs-keyword">import</span> System.Path
+<span class="hljs-keyword">import</span> Data.Either
+<span class="hljs-keyword">import</span> Data.Maybe
+<span class="hljs-keyword">import</span> Data.Tree
+<span class="hljs-keyword">import</span> Data.List
+<span class="hljs-keyword">import</span> Control.Monad
+<span class="hljs-keyword">import</span> Text.ParserCombinators.Parsec
+<span class="hljs-keyword">import</span> <span class="hljs-keyword">qualified</span> Data.Map <span class="hljs-keyword">as</span> Map
+
+<span class="hljs-comment">-- Loop AST for Parsing</span>
+<span class="hljs-class"><span class="hljs-keyword">type</span> <span class="hljs-type">Variable</span> = <span class="hljs-type">String</span></span>
+<span class="hljs-class"><span class="hljs-keyword">data</span> <span class="hljs-type">AssignmentType</span> = <span class="hljs-type">ToVariable</span> <span class="hljs-type">Variable</span></span>
+                    | <span class="hljs-type">ToZero</span>
+                    | <span class="hljs-type">ToOne</span>
+                    | <span class="hljs-type">ToSucc</span> <span class="hljs-type">Variable</span>
+                    | <span class="hljs-type">ToPred</span> <span class="hljs-type">Variable</span>
+                    | <span class="hljs-type">ToProgram</span> <span class="hljs-type">String</span> [<span class="hljs-type">Variable</span>]
+                    <span class="hljs-keyword">deriving</span> (<span class="hljs-type">Eq</span>, <span class="hljs-type">Show</span>)
+
+<span class="hljs-class"><span class="hljs-keyword">data</span> <span class="hljs-type">LoopProgram</span> = <span class="hljs-type">Assignment</span> <span class="hljs-type">Variable</span> <span class="hljs-type">AssignmentType</span></span>
+                 | <span class="hljs-type">ForLoop</span> (<span class="hljs-type">Variable</span>, <span class="hljs-type">AssignmentType</span>) <span class="hljs-type">Variable</span> <span class="hljs-type">LoopProgram</span>
+                 | <span class="hljs-type">Concatenation</span> <span class="hljs-type">LoopProgram</span> <span class="hljs-type">LoopProgram</span>
+                 <span class="hljs-keyword">deriving</span> (<span class="hljs-type">Eq</span>)
+
+<span class="hljs-title">toDataTree</span> (<span class="hljs-type">Assignment</span> v t) = <span class="hljs-type">Node</span> (<span class="hljs-string">"Assignment "</span> ++ show v ++ <span class="hljs-string">" := "</span> ++ show t) []
+<span class="hljs-title">toDataTree</span> (<span class="hljs-type">ForLoop</span> (v, t) end program) = <span class="hljs-type">Node</span> (<span class="hljs-string">"ForLoop "</span> ++ show v ++ <span class="hljs-string">" := "</span> ++ show t ++ <span class="hljs-string">"to "</span> ++ show end) [toDataTree program]
+<span class="hljs-title">toDataTree</span> (<span class="hljs-type">Concatenation</span> l r) = <span class="hljs-type">Node</span> <span class="hljs-string">""</span> [toDataTree l, toDataTree r] 
+<span class="hljs-class"><span class="hljs-keyword">instance</span> <span class="hljs-type">Show</span> <span class="hljs-type">LoopProgram</span> <span class="hljs-keyword">where</span></span>
+    <span class="hljs-comment">-- show x = (drawTree . toDataTree) x ++ "\n\n Printed Program :\n" ++ toProgramStructure [] x </span>
+    show = toProgramStructure [] 
+
+<span class="hljs-comment">-- PARSER COMBINATORS FOR LOOP PROGRAMS</span>
+<span class="hljs-title">wsfnb</span> :: <span class="hljs-type">GenParser</span> <span class="hljs-type">Char</span> st a -&gt; <span class="hljs-type">GenParser</span> <span class="hljs-type">Char</span> st a
+<span class="hljs-title">wsfnb</span> t = <span class="hljs-keyword">do</span>
+    many space
+    res &lt;- t
+    many space
+    return res
+
+<span class="hljs-title">semicolon</span> :: <span class="hljs-type">GenParser</span> <span class="hljs-type">Char</span> st <span class="hljs-type">Char</span>
+<span class="hljs-title">semicolon</span> = wsfnb $ char ';'
+
+<span class="hljs-title">variable</span> :: <span class="hljs-type">GenParser</span> <span class="hljs-type">Char</span> st <span class="hljs-type">Variable</span>
+<span class="hljs-title">variable</span> = wsfnb $ <span class="hljs-keyword">do</span>
+    x &lt;- letter
+    xs &lt;- many digit
+    return (x:xs)
+
+<span class="hljs-title">assign</span> :: <span class="hljs-type">GenParser</span> <span class="hljs-type">Char</span> st <span class="hljs-type">String</span>
+<span class="hljs-title">assign</span> = wsfnb $ <span class="hljs-keyword">do</span>
+    char ':'
+    char '='
+    return <span class="hljs-string">":="</span>
+
+<span class="hljs-title">assignment</span> :: <span class="hljs-type">GenParser</span> <span class="hljs-type">Char</span> st <span class="hljs-type">LoopProgram</span>
+<span class="hljs-title">assignment</span> = try oneAssignment 
+             &lt;|&gt; try zeroAssignment 
+             &lt;|&gt; try varAssignment
+             &lt;|&gt; try succAssignment 
+             &lt;|&gt; try predAssignment 
+             &lt;|&gt; programAssignment
+
+<span class="hljs-title">oneAssignment</span> :: <span class="hljs-type">GenParser</span> <span class="hljs-type">Char</span> st <span class="hljs-type">LoopProgram</span>
+<span class="hljs-title">oneAssignment</span> = wsfnb $ <span class="hljs-keyword">do</span>
+    target &lt;- variable
+    assign
+    wsfnb $ char '<span class="hljs-number">1</span>'
+    semicolon
+    return $ <span class="hljs-type">Assignment</span> target <span class="hljs-type">ToOne</span>
+
+<span class="hljs-title">zeroAssignment</span> :: <span class="hljs-type">GenParser</span> <span class="hljs-type">Char</span> st <span class="hljs-type">LoopProgram</span>
+<span class="hljs-title">zeroAssignment</span> = wsfnb $ <span class="hljs-keyword">do</span>
+    target &lt;- variable
+    assign
+    wsfnb $ char '<span class="hljs-number">0</span>'
+    semicolon
+    return $ <span class="hljs-type">Assignment</span> target <span class="hljs-type">ToZero</span>
+
+<span class="hljs-title">varAssignment</span> :: <span class="hljs-type">GenParser</span> <span class="hljs-type">Char</span> st <span class="hljs-type">LoopProgram</span>
+<span class="hljs-title">varAssignment</span> = wsfnb $ <span class="hljs-keyword">do</span>
+    target &lt;- variable
+    assign
+    op &lt;- variable
+    semicolon
+    return $ <span class="hljs-type">Assignment</span> target (<span class="hljs-type">ToVariable</span> op)
+
+<span class="hljs-title">succAssignment</span> :: <span class="hljs-type">GenParser</span> <span class="hljs-type">Char</span> st <span class="hljs-type">LoopProgram</span>
+<span class="hljs-title">succAssignment</span> = wsfnb $ <span class="hljs-keyword">do</span>
+    target &lt;- variable
+    assign
+    op &lt;- variable 
+    wsfnb $ char '+'
+    wsfnb $ char '<span class="hljs-number">1</span>'
+    semicolon
+    return $ <span class="hljs-type">Assignment</span> target (<span class="hljs-type">ToSucc</span> op)
+
+<span class="hljs-title">predAssignment</span> :: <span class="hljs-type">GenParser</span> <span class="hljs-type">Char</span> st <span class="hljs-type">LoopProgram</span>
+<span class="hljs-title">predAssignment</span> = wsfnb $ <span class="hljs-keyword">do</span>
+    target &lt;- variable
+    assign
+    op &lt;- variable 
+    wsfnb $ char '-'
+    wsfnb $ char '<span class="hljs-number">1</span>'
+    semicolon
+    return $ <span class="hljs-type">Assignment</span> target (<span class="hljs-type">ToPred</span> op)
+
+<span class="hljs-title">programAssignment</span> :: <span class="hljs-type">GenParser</span> <span class="hljs-type">Char</span> st <span class="hljs-type">LoopProgram</span>
+<span class="hljs-title">programAssignment</span> = wsfnb $ <span class="hljs-keyword">do</span>
+    target &lt;- variable
+    assign
+    idbod &lt;- many1 letter
+    idtail &lt;- many digit
+    <span class="hljs-keyword">let</span> iden = idbod ++ idtail
+    wsfnb $ char '('
+    vars &lt;- variableList
+    wsfnb $ char ')'
+    semicolon
+    return $ <span class="hljs-type">Assignment</span> target (<span class="hljs-type">ToProgram</span> iden vars)
+
+<span class="hljs-comment">-- variable list need to parse "x, y, z, w"</span>
+<span class="hljs-title">variableList</span> :: <span class="hljs-type">GenParser</span> <span class="hljs-type">Char</span> st [<span class="hljs-type">Variable</span>]
+<span class="hljs-title">variableList</span> = (try $ wsfnb $  <span class="hljs-keyword">do</span>
+    v &lt;- variable
+    wsfnb $ char ','
+    vs &lt;- variableList 
+    return (v:vs))
+    &lt;|&gt; (<span class="hljs-keyword">do</span>
+        v &lt;- variable
+        return [v])
+
+<span class="hljs-title">number</span> :: <span class="hljs-type">GenParser</span> <span class="hljs-type">Char</span> st <span class="hljs-type">Int</span>
+<span class="hljs-title">number</span> = wsfnb $ <span class="hljs-keyword">do</span>
+    digits &lt;- many1 digit
+    return (read digits)
+
+<span class="hljs-title">forSchema</span> :: <span class="hljs-type">GenParser</span> <span class="hljs-type">Char</span> st <span class="hljs-type">LoopProgram</span>
+<span class="hljs-title">forSchema</span> = wsfnb $ <span class="hljs-keyword">do</span>
+    wsfnb $ string <span class="hljs-string">"for"</span>
+    startVar &lt;- variable
+    assign
+    c &lt;- (try $ wsfnb $ char '<span class="hljs-number">0</span>') &lt;|&gt; (wsfnb $ char '<span class="hljs-number">1</span>')
+    <span class="hljs-keyword">let</span> ass = <span class="hljs-keyword">case</span> c <span class="hljs-keyword">of</span> 
+                  '<span class="hljs-number">0</span>' -&gt; <span class="hljs-type">ToZero</span>
+                  _   -&gt; <span class="hljs-type">ToOne</span>
+    wsfnb $ string <span class="hljs-string">"to"</span>
+    endVar &lt;- variable
+    wsfnb $ string <span class="hljs-string">"do"</span>
+    p &lt;- loopProgram
+    wsfnb $ string <span class="hljs-string">"done"</span>
+    return $ <span class="hljs-type">ForLoop</span> (startVar, ass) endVar p
+
+<span class="hljs-title">loopProgram</span> :: <span class="hljs-type">GenParser</span> <span class="hljs-type">Char</span> st <span class="hljs-type">LoopProgram</span>
+<span class="hljs-title">loopProgram</span> = wsfnb $ <span class="hljs-keyword">do</span>
+    p:ps &lt;- many1 (try assignment &lt;|&gt; forSchema)
+    
+    return $ foldl <span class="hljs-type">Concatenation</span> p ps
+
+
+    
+            
+<span class="hljs-comment">-- The actuall interpretation of a compiled LoopProgram</span>
+<span class="hljs-comment">-- </span>
+<span class="hljs-comment">-- With the program we have a map&lt;libraryProgram, Syntax of the program&gt; </span>
+<span class="hljs-comment">-- and the result of the computation is map&lt;string, Int&gt; the final values</span>
+<span class="hljs-comment">-- of all variables after calculation</span>
+<span class="hljs-title">interpret</span> :: <span class="hljs-type">LoopProgram</span> -&gt; <span class="hljs-type">Map</span>.<span class="hljs-type">Map</span> <span class="hljs-type">String</span> <span class="hljs-type">LoopProgram</span> -&gt; <span class="hljs-type">Map</span>.<span class="hljs-type">Map</span> <span class="hljs-type">Variable</span> <span class="hljs-type">Int</span> -&gt; (<span class="hljs-type">Map</span>.<span class="hljs-type">Map</span> <span class="hljs-type">Variable</span> <span class="hljs-type">Int</span>)
+<span class="hljs-comment">-- Change the value of v to the new one according to the assignment</span>
+<span class="hljs-comment">-- if a function call is in the result to add </span>
+<span class="hljs-comment">-- ---&gt; Stop calculation</span>
+<span class="hljs-comment">-- ---&gt; Interpret the library function with arguments those of the function call</span>
+<span class="hljs-title">interpret</span> a@(<span class="hljs-type">Assignment</span> v t) libs prevMap = 
+    <span class="hljs-keyword">case</span> t <span class="hljs-keyword">of</span>
+        <span class="hljs-type">ToVariable</span> v' -&gt; valInsert v v' id prevMap
+        <span class="hljs-type">ToZero</span>        -&gt; <span class="hljs-type">Map</span>.insert v <span class="hljs-number">0</span> prevMap
+        <span class="hljs-type">ToOne</span>         -&gt; <span class="hljs-type">Map</span>.insert v <span class="hljs-number">1</span> prevMap
+        <span class="hljs-type">ToSucc</span> v'     -&gt; valInsert v v' (+<span class="hljs-number">1</span>) prevMap
+        <span class="hljs-type">ToPred</span> v'     -&gt; valInsert v v' (\x -&gt; <span class="hljs-keyword">if</span> x == <span class="hljs-number">0</span> <span class="hljs-keyword">then</span> <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> x - <span class="hljs-number">1</span>) prevMap
+        <span class="hljs-type">ToProgram</span> iden vars -&gt; <span class="hljs-type">Map</span>.insert v (fromJust $ <span class="hljs-type">Map</span>.lookup <span class="hljs-string">"o1"</span> (independentProgram iden vars)) prevMap
+    <span class="hljs-keyword">where</span>
+        independentProgram :: <span class="hljs-type">String</span> -&gt; [<span class="hljs-type">Variable</span>] -&gt; <span class="hljs-type">Map</span>.<span class="hljs-type">Map</span> <span class="hljs-type">Variable</span> <span class="hljs-type">Int</span>
+        independentProgram iden vars =
+            <span class="hljs-keyword">let</span>
+                parsedP = <span class="hljs-type">Map</span>.lookup iden libs
+                func :: <span class="hljs-type">Map</span>.<span class="hljs-type">Map</span> <span class="hljs-type">Variable</span> <span class="hljs-type">Int</span> -&gt; (<span class="hljs-type">Int</span>, <span class="hljs-type">Variable</span>) -&gt; <span class="hljs-type">Map</span>.<span class="hljs-type">Map</span> <span class="hljs-type">Variable</span> <span class="hljs-type">Int</span>
+                func prev (index, curr) =
+                    <span class="hljs-type">Map</span>.insert (<span class="hljs-string">"i"</span> ++ show index) (fromJust $ <span class="hljs-type">Map</span>.lookup curr prevMap) prev 
+            <span class="hljs-keyword">in</span>
+                <span class="hljs-keyword">case</span> isNothing parsedP <span class="hljs-keyword">of</span>
+                    <span class="hljs-type">True</span> -&gt; error (<span class="hljs-string">"no "</span> ++ show iden ++ <span class="hljs-string">" program in the library\n all are:\n"</span> ++ show (<span class="hljs-type">Map</span>.keys libs))
+                    _    -&gt; interpret (fromJust parsedP) libs (foldl func <span class="hljs-type">Map</span>.empty (zip [<span class="hljs-number">1.</span>.] vars))
+        
+        valInsert :: <span class="hljs-type">Variable</span> -&gt; <span class="hljs-type">Variable</span> -&gt; (<span class="hljs-type">Int</span> -&gt; <span class="hljs-type">Int</span>) -&gt; <span class="hljs-type">Map</span>.<span class="hljs-type">Map</span> <span class="hljs-type">Variable</span> <span class="hljs-type">Int</span> -&gt; <span class="hljs-type">Map</span>.<span class="hljs-type">Map</span> <span class="hljs-type">Variable</span> <span class="hljs-type">Int</span>
+        valInsert v v' f prevMap = 
+                <span class="hljs-keyword">if</span> v' `<span class="hljs-type">Map</span>.notMember` prevMap <span class="hljs-keyword">then</span> error (<span class="hljs-string">"unknwon variable "</span> ++ v' ++ <span class="hljs-string">" in "</span> ++ show a) <span class="hljs-keyword">else</span> <span class="hljs-type">Map</span>.insert v (f $ fromJust $ <span class="hljs-type">Map</span>.lookup v' prevMap) prevMap
+
+<span class="hljs-comment">-- iterate the interpretation of the body from startval to endval</span>
+<span class="hljs-title">interpret</span> a@(<span class="hljs-type">ForLoop</span> (startvar, startval) endvar innerProgram) libs prevMap =
+    <span class="hljs-keyword">let</span> 
+        m' = interpret (<span class="hljs-type">Assignment</span> startvar startval) libs prevMap
+        
+        loop :: <span class="hljs-type">Variable</span> -&gt; <span class="hljs-type">Variable</span> -&gt; <span class="hljs-type">Map</span>.<span class="hljs-type">Map</span> <span class="hljs-type">Variable</span> <span class="hljs-type">Int</span> -&gt; <span class="hljs-type">Map</span>.<span class="hljs-type">Map</span> <span class="hljs-type">Variable</span> <span class="hljs-type">Int</span>
+        loop start end currMap =
+            <span class="hljs-keyword">let</span> 
+                res1 = <span class="hljs-type">Map</span>.lookup start currMap
+                res2 = <span class="hljs-type">Map</span>.lookup end currMap
+            <span class="hljs-keyword">in</span>
+                <span class="hljs-keyword">case</span> (res1,res2) <span class="hljs-keyword">of</span>
+                    (<span class="hljs-type">Nothing</span>, _)     -&gt; error (<span class="hljs-string">"you gave me a variable in a loop that does not exist :"</span> ++ show start)
+                    (_, <span class="hljs-type">Nothing</span>) -&gt; error (<span class="hljs-string">"you gave me a variable in a loop that does not exist :"</span> ++ show end)
+                    _             -&gt; <span class="hljs-keyword">if</span> (fromJust res1) &gt; (fromJust res2) 
+                                     <span class="hljs-keyword">then</span> currMap 
+                                     <span class="hljs-keyword">else</span> (loop start end . interpret (<span class="hljs-type">Assignment</span> start (<span class="hljs-type">ToSucc</span> start)) libs . interpret innerProgram libs ) currMap
+            
+    <span class="hljs-keyword">in</span>
+        loop startvar endvar m'
+
+<span class="hljs-comment">-- Interpret left then interpret right           </span>
+<span class="hljs-title">interpret</span> a@(<span class="hljs-type">Concatenation</span> l r) libs prevMap = (interpret r libs . interpret l libs) prevMap
+
+
+
+<span class="hljs-comment">-- New stuff for the compilation of a program targeting Loop so it can be printed</span>
+<span class="hljs-comment">-- Directly into loop code from the AST of LoopProgram</span>
+
+<span class="hljs-title">toProgramStructure'</span> (<span class="hljs-type">ToVariable</span> v) = v
+<span class="hljs-title">toProgramStructure'</span> (<span class="hljs-type">ToZero</span>) = <span class="hljs-string">"0"</span>
+<span class="hljs-title">toProgramStructure'</span> (<span class="hljs-type">ToOne</span>) = <span class="hljs-string">"1"</span>
+<span class="hljs-title">toProgramStructure'</span> (<span class="hljs-type">ToSucc</span> v) = v ++ <span class="hljs-string">" + 1"</span> 
+<span class="hljs-title">toProgramStructure'</span> (<span class="hljs-type">ToPred</span> v) = v ++ <span class="hljs-string">" - 1"</span>
+<span class="hljs-title">toProgramStructure'</span> (<span class="hljs-type">ToProgram</span> p vars) = p ++ <span class="hljs-string">"("</span> ++ intercalate <span class="hljs-string">", "</span> vars ++ <span class="hljs-string">")"</span>
+
+<span class="hljs-title">toProgramStructure</span> indent (<span class="hljs-type">Assignment</span> v t) = indent ++ v ++ <span class="hljs-string">" := "</span> ++ toProgramStructure' t ++ <span class="hljs-string">";\n"</span>
+<span class="hljs-title">toProgramStructure</span> indent (<span class="hljs-type">ForLoop</span> (v, t) end inner) = 
+    indent ++ <span class="hljs-string">"for "</span> ++ v ++ <span class="hljs-string">" := "</span> ++ toProgramStructure' t  ++ <span class="hljs-string">" to "</span> ++ end ++ <span class="hljs-string">" do\n"</span> ++
+    (toProgramStructure (<span class="hljs-string">"    "</span> ++ indent) inner) ++ 
+    indent ++ <span class="hljs-string">"done\n"</span>
+<span class="hljs-title">toProgramStructure</span> indent (<span class="hljs-type">Concatenation</span> l r) = 
+    (toProgramStructure indent l) ++ 
+    (toProgramStructure indent r)
+
+</div></code></pre>
+<hr>
+<h2 id="parser-and-semantic-analyser-of-pascal">Parser and Semantic Analyser of Pascal</h2>
+<pre class="hljs"><code><div><span class="hljs-keyword">module</span> ReducedPascal <span class="hljs-keyword">where</span>
+
+<span class="hljs-keyword">import</span> System.IO
+<span class="hljs-keyword">import</span> Control.Monad
+<span class="hljs-keyword">import</span> Text.ParserCombinators.Parsec
+<span class="hljs-keyword">import</span> Text.ParserCombinators.Parsec.Expr
+<span class="hljs-keyword">import</span> Text.ParserCombinators.Parsec.Language
+<span class="hljs-keyword">import</span> <span class="hljs-keyword">qualified</span> Text.ParserCombinators.Parsec.Token <span class="hljs-keyword">as</span> Token
+<span class="hljs-keyword">import</span> <span class="hljs-keyword">qualified</span> Data.Map <span class="hljs-keyword">as</span> Map
+<span class="hljs-keyword">import</span> Data.Maybe
+
+<span class="hljs-comment">-- Datatypes for definining the AST of Reduced Pascal</span>
+
+<span class="hljs-class"><span class="hljs-keyword">data</span> <span class="hljs-type">Variable</span> = <span class="hljs-type">Variable</span> <span class="hljs-type">String</span></span>
+              | <span class="hljs-type">ArrayIndexedAt</span> <span class="hljs-type">String</span> <span class="hljs-type">Expression</span>
+              <span class="hljs-keyword">deriving</span> (<span class="hljs-type">Eq</span>, <span class="hljs-type">Show</span>)
+<span class="hljs-class"><span class="hljs-keyword">data</span> <span class="hljs-type">Expression</span> = <span class="hljs-type">Equals</span> <span class="hljs-type">Expression</span> <span class="hljs-type">Expression</span></span>
+                | <span class="hljs-type">Different</span> <span class="hljs-type">Expression</span> <span class="hljs-type">Expression</span>
+                | <span class="hljs-type">Less</span> <span class="hljs-type">Expression</span> <span class="hljs-type">Expression</span>
+                | <span class="hljs-type">LessEq</span> <span class="hljs-type">Expression</span> <span class="hljs-type">Expression</span>
+                | <span class="hljs-type">Greater</span> <span class="hljs-type">Expression</span> <span class="hljs-type">Expression</span>
+                | <span class="hljs-type">GreaterEq</span> <span class="hljs-type">Expression</span> <span class="hljs-type">Expression</span>
+                | <span class="hljs-type">Plus</span> <span class="hljs-type">Expression</span> <span class="hljs-type">Expression</span>
+                | <span class="hljs-type">Minus</span> <span class="hljs-type">Expression</span> <span class="hljs-type">Expression</span>
+                | <span class="hljs-type">Mult</span> <span class="hljs-type">Expression</span> <span class="hljs-type">Expression</span>
+                | <span class="hljs-type">Div</span> <span class="hljs-type">Expression</span> <span class="hljs-type">Expression</span>
+                | <span class="hljs-type">Mod</span> <span class="hljs-type">Expression</span> <span class="hljs-type">Expression</span>
+                | <span class="hljs-type">Constant</span> <span class="hljs-type">Integer</span>
+                | <span class="hljs-type">Var</span> <span class="hljs-type">Variable</span>
+                <span class="hljs-keyword">deriving</span> (<span class="hljs-type">Eq</span>, <span class="hljs-type">Show</span>)
+
+<span class="hljs-comment">-- This is the datatype to hold a statement </span>
+<span class="hljs-comment">-- A program is basically a statement but it needs to</span>
+<span class="hljs-comment">-- have the variable definition space handled</span>
+<span class="hljs-class"><span class="hljs-keyword">data</span> <span class="hljs-type">Statement</span> = <span class="hljs-type">Block</span> [<span class="hljs-type">Statement</span>]</span>
+               | <span class="hljs-type">Assignment</span> <span class="hljs-type">Variable</span> <span class="hljs-type">Expression</span>
+               | <span class="hljs-type">If</span> <span class="hljs-type">Expression</span> <span class="hljs-type">Statement</span>
+               | <span class="hljs-type">IfElse</span> <span class="hljs-type">Expression</span> <span class="hljs-type">Statement</span> <span class="hljs-type">Statement</span>
+               | <span class="hljs-type">Case</span> <span class="hljs-type">Expression</span> [(<span class="hljs-type">Integer</span>, <span class="hljs-type">Statement</span>)]
+               | <span class="hljs-type">For</span> <span class="hljs-type">Variable</span> (<span class="hljs-type">Expression</span>, <span class="hljs-type">Expression</span>) <span class="hljs-type">Statement</span>
+               <span class="hljs-comment">-- in the for loop (from-lowerBound, to-UpperBound)</span>
+               <span class="hljs-keyword">deriving</span> (<span class="hljs-type">Eq</span>, <span class="hljs-type">Show</span>)
+
+<span class="hljs-comment">-- The only two types of variables accepted in this</span>
+<span class="hljs-comment">-- version of pascal</span>
+<span class="hljs-class"><span class="hljs-keyword">data</span> <span class="hljs-type">PascalType</span> = <span class="hljs-type">IntegerP</span></span>
+                | <span class="hljs-type">ArrayP</span> (<span class="hljs-type">Integer</span>, <span class="hljs-type">Integer</span>) <span class="hljs-comment">-- it should have a second argument here for the types of the variables in the array but is not needed since we only have Integers and will only allow arrays[integers]</span>
+                <span class="hljs-keyword">deriving</span> (<span class="hljs-type">Eq</span>, <span class="hljs-type">Show</span>)
+
+<span class="hljs-class"><span class="hljs-keyword">data</span> <span class="hljs-type">VarDecl</span> = <span class="hljs-type">IntegerVar</span> <span class="hljs-type">String</span></span>
+             | <span class="hljs-type">ArrayVar</span> <span class="hljs-type">String</span> (<span class="hljs-type">Integer</span>, <span class="hljs-type">Integer</span>)
+             <span class="hljs-keyword">deriving</span> (<span class="hljs-type">Eq</span>, <span class="hljs-type">Show</span>)
+
+<span class="hljs-comment">-- The definition for the whole program</span>
+<span class="hljs-class"><span class="hljs-keyword">data</span> <span class="hljs-type">PascalProgram</span> = <span class="hljs-type">Program</span> {
+    <span class="hljs-title">name</span>      :: <span class="hljs-type">String</span>,      <span class="hljs-comment">-- Name of the program</span>
+    <span class="hljs-title">variables</span> :: [<span class="hljs-type">VarDecl</span>],   <span class="hljs-comment">-- The Variables declared at the start</span>
+    <span class="hljs-title">body</span>      :: [<span class="hljs-type">Statement</span>]  <span class="hljs-comment">-- The main body (begin ... end.)</span>
+} <span class="hljs-keyword">deriving</span> (<span class="hljs-type">Eq</span>, <span class="hljs-type">Show</span>)</span>
+
+<span class="hljs-class"><span class="hljs-keyword">type</span> <span class="hljs-type">SymbolTable</span> = <span class="hljs-type">Map</span>.<span class="hljs-type">Map</span> <span class="hljs-type">String</span> <span class="hljs-type">PascalType</span></span>
+
+
+<span class="hljs-title">languageDef</span> = 
+    emptyDef {
+        <span class="hljs-type">Token</span>.commentStart   = <span class="hljs-string">"(*"</span>,
+        <span class="hljs-type">Token</span>.commentEnd     = <span class="hljs-string">"*)"</span>,
+        <span class="hljs-type">Token</span>.commentLine    = <span class="hljs-string">"//"</span>,
+        <span class="hljs-type">Token</span>.nestedComments = <span class="hljs-type">True</span>,
+        <span class="hljs-type">Token</span>.identStart      = letter,
+        <span class="hljs-type">Token</span>.identLetter      = alphaNum,
+        <span class="hljs-type">Token</span>.reservedNames  = [
+            <span class="hljs-string">"begin"</span>,
+            <span class="hljs-string">"end"</span>,
+            <span class="hljs-string">"if"</span>,
+            <span class="hljs-string">"then"</span>,
+            <span class="hljs-string">"else"</span>,
+            <span class="hljs-string">"case"</span>,
+            <span class="hljs-string">"of"</span>,
+            <span class="hljs-string">"for"</span>,
+            <span class="hljs-string">"to"</span>,
+            <span class="hljs-string">"do"</span>,
+            <span class="hljs-string">"program"</span>,
+            <span class="hljs-string">"var"</span>,
+            <span class="hljs-string">"integer"</span>,
+            <span class="hljs-string">"array"</span>
+        ],
+        <span class="hljs-type">Token</span>.reservedOpNames = [
+            <span class="hljs-string">"="</span>,
+            <span class="hljs-string">"&lt;&gt;"</span>,
+            <span class="hljs-string">"&lt;"</span>,
+            <span class="hljs-string">"&gt;"</span>,
+            <span class="hljs-string">"&lt;="</span>,
+            <span class="hljs-string">"&gt;="</span>,
+            <span class="hljs-string">"+"</span>,
+            <span class="hljs-string">"-"</span>,
+            <span class="hljs-string">"*"</span>,
+            <span class="hljs-string">"div"</span>,
+            <span class="hljs-string">"mod"</span>,
+            <span class="hljs-string">":="</span>,
+            <span class="hljs-string">"["</span>,
+            <span class="hljs-string">"]"</span>,
+            <span class="hljs-string">","</span>,
+            <span class="hljs-string">":"</span>,
+            <span class="hljs-string">"."</span>,
+            <span class="hljs-string">"..."</span>
+        ]
+    }
+
+<span class="hljs-title">lexer</span> = <span class="hljs-type">Token</span>.makeTokenParser languageDef
+
+<span class="hljs-comment">-- All the individual parsers for parsing lexemes</span>
+<span class="hljs-title">identifier</span>           = <span class="hljs-type">Token</span>.identifier     lexer
+<span class="hljs-title">reserved</span>             = <span class="hljs-type">Token</span>.reserved       lexer
+<span class="hljs-title">reservedOp</span>           = <span class="hljs-type">Token</span>.reservedOp     lexer
+<span class="hljs-title">parens</span>               = <span class="hljs-type">Token</span>.parens         lexer
+<span class="hljs-title">natural</span>              = <span class="hljs-type">Token</span>.natural        lexer
+<span class="hljs-title">semicolon</span>            = <span class="hljs-type">Token</span>.semi           lexer
+<span class="hljs-title">whiteSpace</span>           = <span class="hljs-type">Token</span>.whiteSpace     lexer
+
+<span class="hljs-comment">-- expression parser</span>
+<span class="hljs-title">expression</span> :: <span class="hljs-type">Parser</span> <span class="hljs-type">Expression</span>
+<span class="hljs-title">expression</span> = buildExpressionParser table term
+             &lt;?&gt; <span class="hljs-string">"expression"</span>
+
+<span class="hljs-comment">-- base case of expression parser</span>
+<span class="hljs-title">term</span> :: <span class="hljs-type">Parser</span> <span class="hljs-type">Expression</span>
+<span class="hljs-title">term</span> = try (parens expression)
+       &lt;|&gt; liftM <span class="hljs-type">Constant</span> natural
+       &lt;|&gt; try (<span class="hljs-keyword">do</span> {id &lt;- identifier; reservedOp <span class="hljs-string">"["</span>; p &lt;- expression ; reservedOp <span class="hljs-string">"]"</span>; return $ <span class="hljs-type">Var</span> (<span class="hljs-type">ArrayIndexedAt</span> id p);})
+       &lt;|&gt; liftM (<span class="hljs-type">Var</span> . <span class="hljs-type">Variable</span>) identifier
+       &lt;?&gt; <span class="hljs-string">"simple term failed!"</span>
+
+<span class="hljs-title">table</span> = [
+            [binary <span class="hljs-string">"*"</span> <span class="hljs-type">Mult</span> <span class="hljs-type">AssocLeft</span>, binary <span class="hljs-string">"div"</span> <span class="hljs-type">Div</span> <span class="hljs-type">AssocLeft</span>, binary <span class="hljs-string">"mod"</span> <span class="hljs-type">Mod</span> <span class="hljs-type">AssocLeft</span>],
+            [binary <span class="hljs-string">"+"</span> <span class="hljs-type">Plus</span> <span class="hljs-type">AssocLeft</span>, binary <span class="hljs-string">"-"</span> <span class="hljs-type">Minus</span> <span class="hljs-type">AssocLeft</span>],
+            [binary <span class="hljs-string">"="</span> <span class="hljs-type">Equals</span> <span class="hljs-type">AssocNone</span>, binary <span class="hljs-string">"&lt;&gt;"</span> <span class="hljs-type">Different</span> <span class="hljs-type">AssocNone</span>, binary <span class="hljs-string">"&lt;"</span> <span class="hljs-type">Less</span> <span class="hljs-type">AssocNone</span>, binary <span class="hljs-string">"&gt;"</span> <span class="hljs-type">Greater</span> <span class="hljs-type">AssocNone</span>, binary <span class="hljs-string">"&lt;="</span> <span class="hljs-type">LessEq</span> <span class="hljs-type">AssocNone</span>, binary <span class="hljs-string">"&gt;="</span> <span class="hljs-type">GreaterEq</span> <span class="hljs-type">AssocNone</span> ] 
+    ]
+
+<span class="hljs-title">binary</span> name fun assoc = <span class="hljs-type">Infix</span> (<span class="hljs-keyword">do</span>{ reservedOp name; return fun }) assoc
+
+
+<span class="hljs-comment">-- Now the parsers for Statements to build Statement Syntax Tree</span>
+<span class="hljs-title">statement</span> :: <span class="hljs-type">Parser</span> <span class="hljs-type">Statement</span>
+<span class="hljs-title">statement</span> =     try block
+            &lt;|&gt; try assignment
+            &lt;|&gt; try ifElse
+            &lt;|&gt; try <span class="hljs-keyword">if</span>'
+            &lt;|&gt; try <span class="hljs-keyword">case</span>'
+            &lt;|&gt; for
+            &lt;?&gt; <span class="hljs-string">"Probably Something Wrong with opening Statement Here"</span>
+
+<span class="hljs-title">block</span> :: <span class="hljs-type">Parser</span> <span class="hljs-type">Statement</span>
+<span class="hljs-title">block</span> = <span class="hljs-keyword">do</span>
+        reserved <span class="hljs-string">"begin"</span>
+        s &lt;- endBy1 statement semicolon
+        reserved <span class="hljs-string">"end"</span>
+        return $ <span class="hljs-type">Block</span> s
+
+<span class="hljs-title">assignment</span> :: <span class="hljs-type">Parser</span> <span class="hljs-type">Statement</span>
+<span class="hljs-title">assignment</span> = <span class="hljs-keyword">do</span>
+             v &lt;- variable
+             reservedOp <span class="hljs-string">":="</span>
+             e &lt;- expression
+             return $ <span class="hljs-type">Assignment</span> v e
+             &lt;?&gt; <span class="hljs-string">"Failed to parse Assignment!"</span>
+
+<span class="hljs-title">variable</span> :: <span class="hljs-type">Parser</span> <span class="hljs-type">Variable</span>
+<span class="hljs-title">variable</span> = try (<span class="hljs-keyword">do</span> {id &lt;- identifier; reservedOp <span class="hljs-string">"["</span>; p &lt;- expression ; reservedOp <span class="hljs-string">"]"</span>; return (<span class="hljs-type">ArrayIndexedAt</span> id p);})
+              &lt;|&gt; liftM <span class="hljs-type">Variable</span> identifier
+           &lt;?&gt; <span class="hljs-string">"failed to parse variable!"</span>
+
+<span class="hljs-title">ifElse</span> :: <span class="hljs-type">Parser</span> <span class="hljs-type">Statement</span>
+<span class="hljs-title">ifElse</span> = <span class="hljs-keyword">do</span>
+         reserved <span class="hljs-string">"if"</span>
+         condition &lt;- expression
+         reserved <span class="hljs-string">"then"</span>
+         ifpart &lt;- statement
+         reserved <span class="hljs-string">"else"</span>
+         elsepart &lt;- statement
+         return $ <span class="hljs-type">IfElse</span> condition ifpart elsepart
+
+<span class="hljs-title">if'</span> :: <span class="hljs-type">Parser</span> <span class="hljs-type">Statement</span>
+<span class="hljs-title">if'</span> = <span class="hljs-keyword">do</span>
+      reserved <span class="hljs-string">"if"</span>
+      condition &lt;- expression
+      reserved <span class="hljs-string">"then"</span>
+      ifpart &lt;- statement
+      return $ <span class="hljs-type">If</span> condition ifpart
+
+<span class="hljs-title">case'</span> :: <span class="hljs-type">Parser</span> <span class="hljs-type">Statement</span>
+<span class="hljs-title">case'</span> = <span class="hljs-keyword">do</span>
+        reserved <span class="hljs-string">"case"</span>
+        arg &lt;- expression
+        reserved <span class="hljs-string">"of"</span>
+        l &lt;- sepBy1 caseListElem semicolon
+        reserved <span class="hljs-string">"end"</span>
+        return $ <span class="hljs-type">Case</span> arg l
+
+<span class="hljs-title">caseListElem</span> :: <span class="hljs-type">Parser</span> (<span class="hljs-type">Integer</span>, <span class="hljs-type">Statement</span>)
+<span class="hljs-title">caseListElem</span> = <span class="hljs-keyword">do</span>
+               n &lt;- natural
+               reservedOp <span class="hljs-string">":"</span>
+               body &lt;- statement
+               return (n, body)
+
+<span class="hljs-title">for</span> :: <span class="hljs-type">Parser</span> <span class="hljs-type">Statement</span>
+<span class="hljs-title">for</span> = <span class="hljs-keyword">do</span>
+      reserved <span class="hljs-string">"for"</span>
+      <span class="hljs-type">Assignment</span> loopVariable lowerBound &lt;- assignment
+      reserved <span class="hljs-string">"to"</span>
+      upperBound &lt;- expression
+      reserved <span class="hljs-string">"do"</span>
+      body &lt;- statement
+      return $ <span class="hljs-type">For</span> loopVariable (lowerBound, upperBound) body
+    
+
+
+<span class="hljs-title">program</span> :: <span class="hljs-type">Parser</span> <span class="hljs-type">PascalProgram</span>
+<span class="hljs-title">program</span> = <span class="hljs-keyword">do</span>
+          reserved <span class="hljs-string">"program"</span>
+          n &lt;- identifier
+          semicolon
+          reserved <span class="hljs-string">"var"</span>
+          vs &lt;- endBy1 varDef semicolon
+          <span class="hljs-comment">-- now for the main body</span>
+          <span class="hljs-type">Block</span> ss &lt;- block
+          reservedOp <span class="hljs-string">"."</span>
+          return <span class="hljs-type">Program</span> {
+              name = n,
+              variables = concat vs,
+              body = ss
+          }
+
+
+<span class="hljs-title">varDef</span> :: <span class="hljs-type">Parser</span> [<span class="hljs-type">VarDecl</span>]
+<span class="hljs-title">varDef</span> = <span class="hljs-keyword">do</span>
+         ids &lt;- sepBy1 identifier (reservedOp <span class="hljs-string">","</span>)
+         reservedOp <span class="hljs-string">":"</span>
+         func &lt;- <span class="hljs-class"><span class="hljs-keyword">type</span>'</span>
+         return $ map func ids
+
+<span class="hljs-comment">-- This just gathers which type it is and returns</span>
+<span class="hljs-comment">-- the correct constructor to apply to the names</span>
+<span class="hljs-class"><span class="hljs-keyword">type</span>' :: <span class="hljs-type">Parser</span> (<span class="hljs-type">String</span> -&gt; <span class="hljs-type">VarDecl</span>)</span>
+<span class="hljs-class"><span class="hljs-keyword">type</span>' =     (<span class="hljs-title">try</span> $ <span class="hljs-title">reserved</span> "<span class="hljs-title">integer</span>" &gt;&gt; <span class="hljs-title">return</span> <span class="hljs-type">IntegerVar</span>)</span>
+        &lt;|&gt; <span class="hljs-keyword">do</span>
+            reserved <span class="hljs-string">"array"</span>
+            reservedOp <span class="hljs-string">"["</span>
+            from &lt;- natural
+            reservedOp <span class="hljs-string">"..."</span>
+            to &lt;- natural
+            reservedOp <span class="hljs-string">"]"</span>
+            reserved <span class="hljs-string">"of"</span>
+            reserved <span class="hljs-string">"integer"</span>
+            return $ flip <span class="hljs-type">ArrayVar</span> (from, to)
+
+
+<span class="hljs-title">sem</span> :: <span class="hljs-type">PascalProgram</span> -&gt; <span class="hljs-type">Either</span> <span class="hljs-type">SymbolTable</span> <span class="hljs-type">String</span>
+<span class="hljs-title">sem</span> p = 
+    <span class="hljs-keyword">let</span> 
+        st = getSymbolTable p 
+        programStatements = body p
+    <span class="hljs-keyword">in</span>
+        <span class="hljs-keyword">case</span> sem' (<span class="hljs-type">Right</span> (<span class="hljs-type">Block</span> programStatements)) st <span class="hljs-keyword">of</span>
+            <span class="hljs-type">Nothing</span>  -&gt; <span class="hljs-type">Left</span> st
+            <span class="hljs-type">Just</span> err -&gt; <span class="hljs-type">Right</span> err
+
+<span class="hljs-title">getSymbolTable</span> :: <span class="hljs-type">PascalProgram</span> -&gt; <span class="hljs-type">SymbolTable</span>
+<span class="hljs-title">getSymbolTable</span> p = foldl func <span class="hljs-type">Map</span>.empty (variables p)
+    <span class="hljs-keyword">where</span>
+        func prev (<span class="hljs-type">IntegerVar</span> v) | isNothing $ <span class="hljs-type">Map</span>.lookup v prev = <span class="hljs-type">Map</span>.insert v <span class="hljs-type">IntegerP</span> prev
+                                 | otherwise                     = error $ varString v ++ <span class="hljs-string">"already defined"</span>
+        func prev (<span class="hljs-type">ArrayVar</span> v bounds) | isNothing $ <span class="hljs-type">Map</span>.lookup v prev = <span class="hljs-type">Map</span>.insert v (<span class="hljs-type">ArrayP</span> bounds) prev
+                                      | otherwise                     = error $ varString v ++ <span class="hljs-string">"already defined"</span>
+
+
+<span class="hljs-title">sem'</span> :: <span class="hljs-type">Either</span> <span class="hljs-type">Expression</span> <span class="hljs-type">Statement</span> -&gt; <span class="hljs-type">SymbolTable</span> -&gt; <span class="hljs-type">Maybe</span> <span class="hljs-type">String</span>
+<span class="hljs-title">sem'</span> (<span class="hljs-type">Left</span> (<span class="hljs-type">Constant</span> c)) st = <span class="hljs-type">Nothing</span>
+<span class="hljs-title">sem'</span> (<span class="hljs-type">Left</span> (<span class="hljs-type">Var</span> (<span class="hljs-type">Variable</span> v))) st | v `<span class="hljs-type">Map</span>.notMember` st = <span class="hljs-type">Just</span> $ varString v ++ <span class="hljs-string">"is not previously defined"</span>
+                                  | otherwise            =
+                                      <span class="hljs-keyword">case</span> <span class="hljs-type">Map</span>.lookup v st <span class="hljs-keyword">of</span>
+                                          <span class="hljs-type">Just</span> (<span class="hljs-type">ArrayP</span> _) -&gt; <span class="hljs-type">Just</span> $ varString v ++ <span class="hljs-string">"is defined as an array and cannot be used in expressions"</span>
+                                          <span class="hljs-type">Just</span> (<span class="hljs-type">IntegerP</span>) -&gt; <span class="hljs-type">Nothing</span>
+                                          <span class="hljs-type">Nothing</span>         -&gt; <span class="hljs-type">Just</span> <span class="hljs-string">"should not have gotten here"</span>
+
+<span class="hljs-title">sem'</span> (<span class="hljs-type">Left</span> (<span class="hljs-type">Var</span> (<span class="hljs-type">ArrayIndexedAt</span> v e))) st = 
+    <span class="hljs-keyword">case</span> <span class="hljs-type">Map</span>.lookup v st <span class="hljs-keyword">of</span>
+        <span class="hljs-type">Just</span> (<span class="hljs-type">ArrayP</span> (_, _)) -&gt; <span class="hljs-type">Nothing</span>
+        <span class="hljs-type">Just</span> _                  -&gt; <span class="hljs-type">Just</span> $ varString v ++ <span class="hljs-string">"is not an array to be indexed"</span>
+        <span class="hljs-type">Nothing</span>                 -&gt; <span class="hljs-type">Just</span> $ varString v ++ <span class="hljs-string">"is not previously defined"</span>
+
+<span class="hljs-title">sem'</span> (<span class="hljs-type">Left</span> (<span class="hljs-type">Equals</span> l r))    st = helper [<span class="hljs-type">Left</span> l, <span class="hljs-type">Left</span> r] st
+<span class="hljs-title">sem'</span> (<span class="hljs-type">Left</span> (<span class="hljs-type">Different</span> l r)) st = helper [<span class="hljs-type">Left</span> l, <span class="hljs-type">Left</span> r] st
+<span class="hljs-title">sem'</span> (<span class="hljs-type">Left</span> (<span class="hljs-type">Less</span> l r))      st = helper [<span class="hljs-type">Left</span> l, <span class="hljs-type">Left</span> r] st
+<span class="hljs-title">sem'</span> (<span class="hljs-type">Left</span> (<span class="hljs-type">LessEq</span> l r))    st = helper [<span class="hljs-type">Left</span> l, <span class="hljs-type">Left</span> r] st
+<span class="hljs-title">sem'</span> (<span class="hljs-type">Left</span> (<span class="hljs-type">Greater</span> l r))   st = helper [<span class="hljs-type">Left</span> l, <span class="hljs-type">Left</span> r] st
+<span class="hljs-title">sem'</span> (<span class="hljs-type">Left</span> (<span class="hljs-type">GreaterEq</span> l r)) st = helper [<span class="hljs-type">Left</span> l, <span class="hljs-type">Left</span> r] st
+<span class="hljs-title">sem'</span> (<span class="hljs-type">Left</span> (<span class="hljs-type">Plus</span> l r))      st = helper [<span class="hljs-type">Left</span> l, <span class="hljs-type">Left</span> r] st
+<span class="hljs-title">sem'</span> (<span class="hljs-type">Left</span> (<span class="hljs-type">Minus</span> l r))     st = helper [<span class="hljs-type">Left</span> l, <span class="hljs-type">Left</span> r] st
+<span class="hljs-title">sem'</span> (<span class="hljs-type">Left</span> (<span class="hljs-type">Mult</span> l r))      st = helper [<span class="hljs-type">Left</span> l, <span class="hljs-type">Left</span> r] st
+<span class="hljs-title">sem'</span> (<span class="hljs-type">Left</span> (<span class="hljs-type">Div</span> l r))       st = helper [<span class="hljs-type">Left</span> l, <span class="hljs-type">Left</span> r] st
+<span class="hljs-title">sem'</span> (<span class="hljs-type">Left</span> (<span class="hljs-type">Mod</span> l r))       st = helper [<span class="hljs-type">Left</span> l, <span class="hljs-type">Left</span> r] st
+    
+
+<span class="hljs-comment">-- Starting to semantically analyse statements</span>
+<span class="hljs-title">sem'</span> (<span class="hljs-type">Right</span> (<span class="hljs-type">Block</span> stms)) st = helper (map <span class="hljs-type">Right</span> stms) st
+
+<span class="hljs-title">sem'</span> (<span class="hljs-type">Right</span> (<span class="hljs-type">Assignment</span> v e)) st = helper [<span class="hljs-type">Left</span> $ <span class="hljs-type">Var</span> v, <span class="hljs-type">Left</span> e] st 
+
+<span class="hljs-title">sem'</span> (<span class="hljs-type">Right</span> (<span class="hljs-type">If</span> e s)) st = helper [<span class="hljs-type">Left</span> e, <span class="hljs-type">Right</span> s] st
+<span class="hljs-title">sem'</span> (<span class="hljs-type">Right</span> (<span class="hljs-type">IfElse</span> e s s')) st = helper [<span class="hljs-type">Left</span> e, <span class="hljs-type">Right</span> s, <span class="hljs-type">Right</span> s'] st
+<span class="hljs-title">sem'</span> (<span class="hljs-type">Right</span> (<span class="hljs-type">Case</span> e xs)) st = helper (<span class="hljs-type">Left</span> e : map (<span class="hljs-type">Right</span> . snd) xs) st
+<span class="hljs-title">sem'</span> (<span class="hljs-type">Right</span> (<span class="hljs-type">For</span> v (lbound, hbound) stmt)) st = helper [<span class="hljs-type">Right</span> (<span class="hljs-type">Assignment</span> v lbound), <span class="hljs-type">Left</span> hbound, <span class="hljs-type">Right</span> stmt] st
+
+<span class="hljs-title">helper</span> l st = 
+    <span class="hljs-keyword">case</span> (catMaybes . map (flip sem' st)) l <span class="hljs-keyword">of</span>
+        []    -&gt; <span class="hljs-type">Nothing</span>
+        l   -&gt; <span class="hljs-type">Just</span> $ unlines l
+
+<span class="hljs-title">varString</span> v = <span class="hljs-string">"Variable '"</span> ++ v ++ <span class="hljs-string">"' "</span>
+
+<span class="hljs-title">parseProgram</span> :: <span class="hljs-type">IO</span> <span class="hljs-type">String</span> -&gt; <span class="hljs-type">IO</span> (<span class="hljs-type">Either</span> (<span class="hljs-type">PascalProgram</span>, <span class="hljs-type">SymbolTable</span>) (<span class="hljs-type">Either</span> <span class="hljs-type">ParseError</span> <span class="hljs-type">String</span>) ) 
+<span class="hljs-title">parseProgram</span> inp = <span class="hljs-keyword">do</span>
+                   s &lt;- inp
+                   <span class="hljs-keyword">let</span> p = parse program [] s
+                   <span class="hljs-keyword">case</span> p <span class="hljs-keyword">of</span>
+                       <span class="hljs-type">Left</span> err -&gt; return (<span class="hljs-type">Right</span> $ <span class="hljs-type">Left</span> err)
+                       <span class="hljs-type">Right</span> p  -&gt; <span class="hljs-keyword">case</span> sem p <span class="hljs-keyword">of</span> 
+                                       <span class="hljs-type">Left</span> st   -&gt; return $ <span class="hljs-type">Left</span> (p, st)
+                                       <span class="hljs-type">Right</span> err -&gt; return $ <span class="hljs-type">Right</span> $ <span class="hljs-type">Right</span> err
+                   
+</div></code></pre>
+<h2 id="pascal-to-loop-logic">Pascal To Loop Logic</h2>
+<pre class="hljs"><code><div><span class="hljs-keyword">module</span> RPtoLoop <span class="hljs-keyword">where</span>
+
+<span class="hljs-keyword">import</span> <span class="hljs-keyword">qualified</span> ReducedPascal <span class="hljs-keyword">as</span> P
+<span class="hljs-keyword">import</span> <span class="hljs-keyword">qualified</span> Loop <span class="hljs-keyword">as</span> L
+<span class="hljs-keyword">import</span> <span class="hljs-keyword">qualified</span> Data.Map <span class="hljs-keyword">as</span> Map
+
+
+<span class="hljs-comment">-- Operators to help not writing a lot of stuff</span>
+<span class="hljs-comment">-- ASSIGNMENT TO FUNCTION CALL</span>
+(&lt;%) :: <span class="hljs-type">L</span>.<span class="hljs-type">Variable</span> -&gt; (<span class="hljs-type">String</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>]) -&gt; <span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>
+<span class="hljs-title">var</span> &lt;% (fname, args) = <span class="hljs-type">L</span>.<span class="hljs-type">Assignment</span> var (<span class="hljs-type">L</span>.<span class="hljs-type">ToProgram</span> fname args)
+
+<span class="hljs-comment">-- ASSIGNMENT TO SOMETHING</span>
+(&lt;==) :: <span class="hljs-type">L</span>.<span class="hljs-type">Variable</span> -&gt; <span class="hljs-type">L</span>.<span class="hljs-type">AssignmentType</span> -&gt; <span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>
+<span class="hljs-title">var</span> &lt;== t = <span class="hljs-type">L</span>.<span class="hljs-type">Assignment</span> var t
+
+<span class="hljs-comment">-- INFIX CONCATENATION</span>
+(=&gt;&gt;) :: <span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span> -&gt; <span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span> -&gt; <span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>
+<span class="hljs-title">l</span> =&gt;&gt; r = <span class="hljs-type">L</span>.<span class="hljs-type">Concatenation</span> l r
+<span class="hljs-keyword">infixl</span> <span class="hljs-number">0</span> =&gt;&gt;
+
+<span class="hljs-comment">-- GET THE NEW VARIABLE OF AN INTEGER</span>
+<span class="hljs-title">decode</span> :: <span class="hljs-type">Show</span> a =&gt; a -&gt; <span class="hljs-type">String</span>
+<span class="hljs-title">decode</span> x = (<span class="hljs-string">"x"</span> ++ show x)
+
+<span class="hljs-comment">-- END OF OPERATORS</span>
+
+<span class="hljs-comment">-- THIS DEFINES A DATATYPE FOR CALCULATION</span>
+<span class="hljs-comment">-- CALCULATIONS CAN BE COMBINED AND APPLIED THUS </span>
+<span class="hljs-comment">-- THE APPLICATIVE AND MONAD DEFINITIONS</span>
+
+<span class="hljs-comment">-- Αυτό γίνεται γιατί κατά την διάρκεια της μετατροπής</span>
+<span class="hljs-comment">-- ενός pascal expression χρειαζόμαστε ξεχωριστές μεταβλητές συνέχεια</span>
+<span class="hljs-comment">-- για ενδοιάμεσα απότελέσματα</span>
+<span class="hljs-comment">-- </span>
+<span class="hljs-comment">-- Το UniqueCalculation φορντίζει να περνιέται ένας ακέραιος μεταξύ των </span>
+<span class="hljs-comment">-- calculation μέσω του οποίου δημιουργούνται νέες καινούργιες μεταβλητές</span>
+
+<span class="hljs-comment">-- Το UniqueCalculation είναι Monad και από αυτό μπορεί να χρησιμοποιηθεί το ειδικό</span>
+<span class="hljs-comment">-- do-syntax της haskell για τον συνδυασμό μικρότερων calculations σε μεγαλύτερα και πιο σύνθετα</span>
+
+<span class="hljs-comment">-- A Pascal Program will be defined as a UniqueCalculation of a LoopProgram</span>
+<span class="hljs-class"><span class="hljs-keyword">newtype</span> <span class="hljs-type">UniqueCaclulation</span> a = <span class="hljs-type">Calculation</span> {
+    <span class="hljs-title">runCalculation</span> :: <span class="hljs-type">Integer</span> -&gt; (<span class="hljs-title">a</span>, <span class="hljs-type">Integer</span>)
+} </span>
+<span class="hljs-class">
+<span class="hljs-keyword">instance</span> <span class="hljs-type">Functor</span> (<span class="hljs-type">UniqueCaclulation</span>) <span class="hljs-keyword">where</span></span>
+    fmap f (<span class="hljs-type">Calculation</span> g) = <span class="hljs-type">Calculation</span> $ \i -&gt;
+        <span class="hljs-keyword">let</span>
+            (res, next) = g i
+        <span class="hljs-keyword">in</span>
+            (f res, next)
+<span class="hljs-class">
+<span class="hljs-keyword">instance</span> <span class="hljs-type">Applicative</span> (<span class="hljs-type">UniqueCaclulation</span>) <span class="hljs-keyword">where</span></span>
+    <span class="hljs-comment">-- pure :: a -&gt; f a</span>
+    pure x = <span class="hljs-type">Calculation</span> $ \i -&gt; (x, i)
+    
+    (<span class="hljs-type">Calculation</span> f) &lt;*&gt; (<span class="hljs-type">Calculation</span> p) = <span class="hljs-type">Calculation</span> $ \i -&gt;
+        <span class="hljs-keyword">let</span>
+            (res, next) = f i 
+            (res', next') = p next
+        <span class="hljs-keyword">in</span>
+            (res res', next')
+<span class="hljs-class">
+<span class="hljs-keyword">instance</span> <span class="hljs-type">Monad</span> (<span class="hljs-type">UniqueCaclulation</span>) <span class="hljs-keyword">where</span></span>
+    return = pure
+    (<span class="hljs-type">Calculation</span> p) &gt;&gt;= (f) = 
+        <span class="hljs-type">Calculation</span> $ \i -&gt;
+            <span class="hljs-keyword">let</span>
+                (res, next) = p i
+                <span class="hljs-type">Calculation</span> g = f res
+            <span class="hljs-keyword">in</span>
+                g next
+
+<span class="hljs-comment">-- Grab an Integer for creating a new unique variable and change the state to the next Integer</span>
+<span class="hljs-title">next</span> :: <span class="hljs-type">UniqueCaclulation</span> <span class="hljs-type">Integer</span>
+<span class="hljs-title">next</span> = <span class="hljs-type">Calculation</span> $ \i -&gt; (i, i+<span class="hljs-number">1</span>)
+
+<span class="hljs-comment">-- Calculate the increment of a calculation</span>
+<span class="hljs-title">incCalc</span> :: <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>])  -&gt; <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>]) 
+<span class="hljs-title">incCalc</span> p = <span class="hljs-keyword">do</span>
+            (res, rest) &lt;- p
+            <span class="hljs-keyword">let</span> f = head rest
+            return $ (res =&gt;&gt; f &lt;== <span class="hljs-type">L</span>.<span class="hljs-type">ToSucc</span> (f), [f])
+
+<span class="hljs-comment">-- Calculate 0</span>
+<span class="hljs-title">calcZero</span> :: <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>]) 
+<span class="hljs-title">calcZero</span> = <span class="hljs-keyword">do</span>
+    var &lt;- decode &lt;$&gt; next
+    return (var &lt;== <span class="hljs-type">L</span>.<span class="hljs-type">ToZero</span>, [var])
+
+<span class="hljs-comment">-- Calculate a constant n</span>
+<span class="hljs-title">constantCalc</span> :: <span class="hljs-type">Integer</span> -&gt; <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>])
+<span class="hljs-title">constantCalc</span> <span class="hljs-number">0</span> = calcZero
+<span class="hljs-title">constantCalc</span> n = incCalc (constantCalc (n<span class="hljs-number">-1</span>))
+
+<span class="hljs-comment">-- Calculate a series of calculations</span>
+<span class="hljs-title">calculateAll</span> :: [<span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>])] -&gt; <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>])
+<span class="hljs-title">calculateAll</span> [x] = x
+<span class="hljs-title">calculateAll</span> (x:xs) = <span class="hljs-keyword">do</span>
+    (res, vars) &lt;- x
+    (res', vars') &lt;- calculateAll xs
+    return (res =&gt;&gt; res', vars ++ vars')
+
+<span class="hljs-comment">-- Pass to a function results of a list of computations</span>
+<span class="hljs-title">funCallCalc</span> :: <span class="hljs-type">String</span> -&gt; [<span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>])] -&gt; <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>])
+<span class="hljs-title">funCallCalc</span> s vs = <span class="hljs-keyword">do</span>
+    (res, resvars) &lt;- calculateAll vs
+    var &lt;- decode &lt;$&gt; next
+    return (res =&gt;&gt; var &lt;% (s, resvars), [var])
+
+
+<span class="hljs-comment">-- Caclualte if two calculations produce equal results</span>
+<span class="hljs-title">equalsCalc</span> :: <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>]) -&gt; <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>]) -&gt; <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>])
+<span class="hljs-title">equalsCalc</span> l r = funCallCalc <span class="hljs-string">"equals"</span> [l, r]
+
+<span class="hljs-comment">-- Caclualte if two calculations produce different results</span>
+<span class="hljs-title">differentCalc</span> :: <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>]) -&gt; <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>]) -&gt; <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>])
+<span class="hljs-title">differentCalc</span> l r = <span class="hljs-keyword">do</span> 
+    (res, vars) &lt;- equalsCalc l r
+    var &lt;- decode &lt;$&gt; next
+    return (res =&gt;&gt; var &lt;% (<span class="hljs-string">"ifnzero"</span>, vars), [var])
+
+<span class="hljs-comment">-- Caclualte if the first calculation is smaller than the second</span>
+<span class="hljs-title">lessCalc</span> :: <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>]) -&gt; <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>]) -&gt; <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>])
+<span class="hljs-title">lessCalc</span> l r = funCallCalc <span class="hljs-string">"less"</span> [l, r]
+
+<span class="hljs-comment">-- Caclualte if the first calculation is smaller or equals to the second</span>
+<span class="hljs-title">lessEqCalc</span> :: <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>]) -&gt; <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>]) -&gt; <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>])
+<span class="hljs-title">lessEqCalc</span> l r = <span class="hljs-keyword">do</span>
+    (res, rvar) &lt;- l
+    (res', rvar') &lt;- r
+    <span class="hljs-keyword">let</span> var = head rvar
+    <span class="hljs-keyword">let</span> var' = head rvar'
+    var1 &lt;- decode &lt;$&gt; next
+    var2 &lt;- decode &lt;$&gt; next
+    var3 &lt;- decode &lt;$&gt; next
+    return (res =&gt;&gt; res' =&gt;&gt; var1 &lt;% (<span class="hljs-string">"less"</span>, [var, var']) =&gt;&gt; var2 &lt;% (<span class="hljs-string">"equals"</span>, [var, var']) =&gt;&gt; var3 &lt;% (<span class="hljs-string">"or"</span>, [var1, var2]), [var3])
+
+<span class="hljs-comment">-- Caclualte if the first calculation is greater than the second</span>
+<span class="hljs-title">greaterCalc</span> :: <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>]) -&gt; <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>]) -&gt; <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>])
+<span class="hljs-title">greaterCalc</span> l r = funCallCalc <span class="hljs-string">"greater"</span> [l, r]
+
+<span class="hljs-comment">-- Caclualte if the first calculation is greater or equals to the second</span>
+<span class="hljs-title">greaterEqCalc</span> :: <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>]) -&gt; <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>]) -&gt; <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>])
+<span class="hljs-title">greaterEqCalc</span> l r = <span class="hljs-keyword">do</span>
+    (res, rvar) &lt;- l
+    (res', rvar') &lt;- r
+    <span class="hljs-keyword">let</span> var = head rvar
+    <span class="hljs-keyword">let</span> var' = head rvar'
+    var1 &lt;- decode &lt;$&gt; next
+    var2 &lt;- decode &lt;$&gt; next
+    var3 &lt;- decode &lt;$&gt; next
+    return (res =&gt;&gt; res' =&gt;&gt; var1 &lt;% (<span class="hljs-string">"greater"</span>, [var, var']) =&gt;&gt; var2 &lt;% (<span class="hljs-string">"equals"</span>, [var, var']) =&gt;&gt; var3 &lt;% (<span class="hljs-string">"or"</span>, [var1, var2]), [var3])
+
+<span class="hljs-comment">-- Plus of two calculations</span>
+<span class="hljs-title">plusCalc</span> :: <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>]) -&gt; <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>]) -&gt; <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>])
+<span class="hljs-title">plusCalc</span> l r = funCallCalc <span class="hljs-string">"add"</span> [l, r]
+
+<span class="hljs-comment">-- Minus of two calculations ...</span>
+<span class="hljs-title">minusCalc</span> :: <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>]) -&gt; <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>]) -&gt; <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>])
+<span class="hljs-title">minusCalc</span> l r = funCallCalc <span class="hljs-string">"sub"</span> [l, r]
+
+<span class="hljs-title">multCalc</span> :: <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>]) -&gt; <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>]) -&gt; <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>])
+<span class="hljs-title">multCalc</span> l r = funCallCalc <span class="hljs-string">"mult"</span> [l, r]
+
+<span class="hljs-title">divCalc</span> :: <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>]) -&gt; <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>]) -&gt; <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>])
+<span class="hljs-title">divCalc</span> l r = funCallCalc <span class="hljs-string">"div"</span> [l, r]
+
+<span class="hljs-title">modCalc</span> :: <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>]) -&gt; <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>]) -&gt; <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>])
+<span class="hljs-title">modCalc</span> l r = funCallCalc <span class="hljs-string">"mod"</span> [l, r]
+
+
+<span class="hljs-comment">-- This generates </span>
+<span class="hljs-title">programCalc</span> :: (<span class="hljs-type">P</span>.<span class="hljs-type">PascalProgram</span>, <span class="hljs-type">P</span>.<span class="hljs-type">SymbolTable</span>) -&gt; <span class="hljs-type">UniqueCaclulation</span> <span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>
+<span class="hljs-title">programCalc</span> (p, symtbl) = <span class="hljs-keyword">do</span>
+    <span class="hljs-keyword">let</span> header = (foldl1 (=&gt;&gt;) . map f . <span class="hljs-type">Map</span>.assocs) symtbl
+    res &lt;- (statementCalc . <span class="hljs-type">P</span>.<span class="hljs-type">Block</span> . <span class="hljs-type">P</span>.body) p
+    return (header =&gt;&gt; res)
+
+    <span class="hljs-keyword">where</span>
+        f (v, <span class="hljs-type">P</span>.<span class="hljs-type">IntegerP</span>) = v &lt;== <span class="hljs-type">L</span>.<span class="hljs-type">ToZero</span>
+        f (n, <span class="hljs-type">P</span>.<span class="hljs-type">ArrayP</span> (low, high))  | low == high = f ((n ++ show low), <span class="hljs-type">P</span>.<span class="hljs-type">IntegerP</span>)
+                                     | otherwise   = f ((n ++ show low), <span class="hljs-type">P</span>.<span class="hljs-type">IntegerP</span>) =&gt;&gt; f (n, <span class="hljs-type">P</span>.<span class="hljs-type">ArrayP</span>(low+<span class="hljs-number">1</span>, high))
+
+        expressionCalc :: <span class="hljs-type">P</span>.<span class="hljs-type">Expression</span> -&gt; <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>])
+        expressionCalc (<span class="hljs-type">P</span>.<span class="hljs-type">Equals</span> l r) = equalsCalc (expressionCalc l) (expressionCalc r)
+        expressionCalc (<span class="hljs-type">P</span>.<span class="hljs-type">Different</span> l r) = differentCalc (expressionCalc l) (expressionCalc r)
+        expressionCalc (<span class="hljs-type">P</span>.<span class="hljs-type">Less</span> l r) = lessCalc (expressionCalc l) (expressionCalc r)
+        expressionCalc (<span class="hljs-type">P</span>.<span class="hljs-type">LessEq</span> l r) = lessEqCalc (expressionCalc l) (expressionCalc r)
+        expressionCalc (<span class="hljs-type">P</span>.<span class="hljs-type">Greater</span> l r) = greaterCalc (expressionCalc l) (expressionCalc r)
+        expressionCalc (<span class="hljs-type">P</span>.<span class="hljs-type">GreaterEq</span> l r) = greaterEqCalc (expressionCalc l) (expressionCalc r)
+        expressionCalc (<span class="hljs-type">P</span>.<span class="hljs-type">Plus</span> l r) = plusCalc (expressionCalc l) (expressionCalc r)
+        expressionCalc (<span class="hljs-type">P</span>.<span class="hljs-type">Minus</span> l r) = minusCalc (expressionCalc l) (expressionCalc r)
+        expressionCalc (<span class="hljs-type">P</span>.<span class="hljs-type">Mult</span> l r) = multCalc (expressionCalc l) (expressionCalc r)
+        expressionCalc (<span class="hljs-type">P</span>.<span class="hljs-type">Div</span> l r) = divCalc (expressionCalc l) (expressionCalc r)
+        expressionCalc (<span class="hljs-type">P</span>.<span class="hljs-type">Mod</span> l r) =  modCalc (expressionCalc l) (expressionCalc r)
+        expressionCalc (<span class="hljs-type">P</span>.<span class="hljs-type">Constant</span> i) = constantCalc i
+        expressionCalc (<span class="hljs-type">P</span>.<span class="hljs-type">Var</span> v) = variableCalc v
+
+        <span class="hljs-comment">-- Now compiling statements to LoopPrograms </span>
+        statementCalc :: <span class="hljs-type">P</span>.<span class="hljs-type">Statement</span> -&gt; <span class="hljs-type">UniqueCaclulation</span> <span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>
+        statementCalc (<span class="hljs-type">P</span>.<span class="hljs-type">Block</span> [stmt]) = statementCalc stmt
+        statementCalc (<span class="hljs-type">P</span>.<span class="hljs-type">Block</span> (st:sts)) = <span class="hljs-keyword">do</span>
+            res &lt;- statementCalc st 
+            res' &lt;- statementCalc (<span class="hljs-type">P</span>.<span class="hljs-type">Block</span> sts)
+            return (res =&gt;&gt; res')
+
+        statementCalc (<span class="hljs-type">P</span>.<span class="hljs-type">Assignment</span> (<span class="hljs-type">P</span>.<span class="hljs-type">Variable</span> v) e) = <span class="hljs-keyword">do</span>
+            (res', var') &lt;- expressionCalc e
+            <span class="hljs-keyword">let</span> var = head var'
+            return (res' =&gt;&gt; v &lt;== <span class="hljs-type">L</span>.<span class="hljs-type">ToVariable</span> var)
+
+        statementCalc (<span class="hljs-type">P</span>.<span class="hljs-type">Assignment</span> (<span class="hljs-type">P</span>.<span class="hljs-type">ArrayIndexedAt</span> v e) e') = <span class="hljs-keyword">do</span>
+            <span class="hljs-keyword">let</span> <span class="hljs-type">Just</span> ( <span class="hljs-type">P</span>.<span class="hljs-type">ArrayP</span> (low, high)) = <span class="hljs-type">Map</span>.lookup v symtbl
+            (res, resvar) &lt;- expressionCalc e'
+            <span class="hljs-keyword">let</span> var = head resvar
+            stsres &lt;- statementCalc (<span class="hljs-type">P</span>.<span class="hljs-type">Case</span> e [(i, <span class="hljs-type">P</span>.<span class="hljs-type">Assignment</span> (<span class="hljs-type">P</span>.<span class="hljs-type">Variable</span> (v ++ show i)) (<span class="hljs-type">P</span>.<span class="hljs-type">Var</span> (<span class="hljs-type">P</span>.<span class="hljs-type">Variable</span> var))) | i &lt;- [low..high]])
+            return (res =&gt;&gt; stsres)
+
+
+        statementCalc (<span class="hljs-type">P</span>.<span class="hljs-type">If</span> e stmt) = <span class="hljs-keyword">do</span>
+            (res, vars) &lt;- funCallCalc <span class="hljs-string">"ifnzero"</span> [expressionCalc e]
+            <span class="hljs-keyword">let</span> var = head vars
+            nvar &lt;- decode &lt;$&gt; next
+            res' &lt;- statementCalc stmt
+            return (res =&gt;&gt; <span class="hljs-type">L</span>.<span class="hljs-type">ForLoop</span> (nvar, <span class="hljs-type">L</span>.<span class="hljs-type">ToOne</span>) var res')
+
+        statementCalc (<span class="hljs-type">P</span>.<span class="hljs-type">IfElse</span> e stmt stmt') = <span class="hljs-keyword">do</span>
+            <span class="hljs-comment">-- calculate the codition</span>
+            (res, vars) &lt;- expressionCalc e
+            <span class="hljs-keyword">let</span> var = head vars
+            <span class="hljs-comment">-- get two new variables to hold e &amp;&amp; not e</span>
+            truevar &lt;- decode &lt;$&gt; next
+            falsevar &lt;- decode &lt;$&gt; next
+            <span class="hljs-keyword">let</span> trueScale = truevar &lt;% (<span class="hljs-string">"ifnzero"</span>, [var])
+            <span class="hljs-keyword">let</span> falseScale = falsevar &lt;% (<span class="hljs-string">"ifzero"</span>, [var])
+            
+            resif &lt;- statementCalc (<span class="hljs-type">P</span>.<span class="hljs-type">If</span> (<span class="hljs-type">P</span>.<span class="hljs-type">Var</span> (<span class="hljs-type">P</span>.<span class="hljs-type">Variable</span> truevar)) stmt)
+            reselse &lt;- statementCalc (<span class="hljs-type">P</span>.<span class="hljs-type">If</span> (<span class="hljs-type">P</span>.<span class="hljs-type">Var</span> (<span class="hljs-type">P</span>.<span class="hljs-type">Variable</span> falsevar)) stmt')
+            return (res =&gt;&gt; trueScale =&gt;&gt; falseScale =&gt;&gt; resif =&gt;&gt; reselse)
+
+        <span class="hljs-comment">-- Case Expression [(Integer, Statement)]</span>
+        statementCalc (<span class="hljs-type">P</span>.<span class="hljs-type">Case</span> e cases) = <span class="hljs-keyword">do</span>
+            (res, resvar) &lt;- expressionCalc e
+            <span class="hljs-keyword">let</span> var = head resvar
+            casesres &lt;- calculateCases var cases
+            return (res =&gt;&gt; casesres)
+            <span class="hljs-keyword">where</span>
+                calculateCases :: <span class="hljs-type">L</span>.<span class="hljs-type">Variable</span> -&gt; [(<span class="hljs-type">Integer</span>, <span class="hljs-type">P</span>.<span class="hljs-type">Statement</span>)] -&gt; <span class="hljs-type">UniqueCaclulation</span> <span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>
+                calculateCases v [(i, stmt)] = statementCalc (<span class="hljs-type">P</span>.<span class="hljs-type">If</span> (<span class="hljs-type">P</span>.<span class="hljs-type">Equals</span> (<span class="hljs-type">P</span>.<span class="hljs-type">Constant</span> i) (<span class="hljs-type">P</span>.<span class="hljs-type">Var</span> (<span class="hljs-type">P</span>.<span class="hljs-type">Variable</span> v))) stmt)
+                calculateCases v ((i, stmt):cs) = <span class="hljs-keyword">do</span>
+                    bodyres &lt;- statementCalc (<span class="hljs-type">P</span>.<span class="hljs-type">If</span> (<span class="hljs-type">P</span>.<span class="hljs-type">Equals</span> (<span class="hljs-type">P</span>.<span class="hljs-type">Constant</span> i) (<span class="hljs-type">P</span>.<span class="hljs-type">Var</span> (<span class="hljs-type">P</span>.<span class="hljs-type">Variable</span> v))) stmt)
+                    res &lt;- calculateCases v cs
+                    return (bodyres =&gt;&gt; res)
+
+
+        <span class="hljs-comment">-- For Variable (Expression, Expression) Statement</span>
+        statementCalc (<span class="hljs-type">P</span>.<span class="hljs-type">For</span> (<span class="hljs-type">P</span>.<span class="hljs-type">Variable</span> v) (lowerBound, upperBound) stmt) = <span class="hljs-keyword">do</span>
+            (resl, resvarl) &lt;- expressionCalc lowerBound
+            <span class="hljs-keyword">let</span> varl = head resvarl
+            (resu, resvaru) &lt;- expressionCalc upperBound
+            <span class="hljs-keyword">let</span> varh = head resvaru
+            <span class="hljs-comment">-- calculate the difference because all loop forLoops have to start</span>
+            <span class="hljs-comment">-- at 0 or 1</span>
+            diffvar &lt;- decode &lt;$&gt; next
+            <span class="hljs-comment">-- calculate the number the forLoop will be executed here we add one</span>
+            <span class="hljs-comment">-- since in pascal the for loop runs if the loopvariable is equal to the </span>
+            <span class="hljs-comment">-- upper bound</span>
+            <span class="hljs-keyword">let</span> difference = diffvar &lt;% (<span class="hljs-string">"sub"</span>, [varh, varl]) =&gt;&gt; diffvar &lt;== (<span class="hljs-type">L</span>.<span class="hljs-type">ToSucc</span> diffvar)
+            loopvar &lt;- decode &lt;$&gt; next
+            body &lt;- statementCalc stmt
+            <span class="hljs-keyword">let</span> actualBody = body =&gt;&gt; v &lt;== (<span class="hljs-type">L</span>.<span class="hljs-type">ToSucc</span> v)
+            return (resl =&gt;&gt; resu =&gt;&gt; difference =&gt;&gt; (v &lt;== <span class="hljs-type">L</span>.<span class="hljs-type">ToVariable</span> varl) =&gt;&gt; <span class="hljs-type">L</span>.<span class="hljs-type">ForLoop</span> (loopvar, <span class="hljs-type">L</span>.<span class="hljs-type">ToOne</span>) diffvar actualBody =&gt;&gt; v &lt;== <span class="hljs-type">L</span>.<span class="hljs-type">ToPred</span> v)
+
+        <span class="hljs-comment">-- This is the harder part since we have to access an array</span>
+        variableCalc :: <span class="hljs-type">P</span>.<span class="hljs-type">Variable</span> -&gt; <span class="hljs-type">UniqueCaclulation</span> (<span class="hljs-type">L</span>.<span class="hljs-type">LoopProgram</span>, [<span class="hljs-type">L</span>.<span class="hljs-type">Variable</span>])
+        variableCalc (<span class="hljs-type">P</span>.<span class="hljs-type">Variable</span> v) = <span class="hljs-keyword">do</span>
+            return (v &lt;== <span class="hljs-type">L</span>.<span class="hljs-type">ToVariable</span> v, [v])
+
+        variableCalc (<span class="hljs-type">P</span>.<span class="hljs-type">ArrayIndexedAt</span> v e) = <span class="hljs-keyword">do</span>
+            <span class="hljs-comment">-- This will never fail to match because the semantic analysis</span>
+            <span class="hljs-comment">-- will be prior to compiling to loop</span>
+            <span class="hljs-keyword">let</span> <span class="hljs-type">Just</span> ( <span class="hljs-type">P</span>.<span class="hljs-type">ArrayP</span> (low, high)) = <span class="hljs-type">Map</span>.lookup v symtbl
+            nvar &lt;- decode &lt;$&gt; next
+            res &lt;- statementCalc (<span class="hljs-type">P</span>.<span class="hljs-type">Case</span> e [(i, <span class="hljs-type">P</span>.<span class="hljs-type">Assignment</span> (<span class="hljs-type">P</span>.<span class="hljs-type">Variable</span> nvar) (<span class="hljs-type">P</span>.<span class="hljs-type">Var</span> (<span class="hljs-type">P</span>.<span class="hljs-type">Variable</span> (v ++ show i)))) | i &lt;- [low..high]])
+            return (res, [nvar])
+</div></code></pre>
+
+</body>
+</html>

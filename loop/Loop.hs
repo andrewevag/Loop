@@ -12,6 +12,7 @@ import Control.Monad
 import Text.ParserCombinators.Parsec
 import qualified Data.Map as Map
 
+-- Loop AST for Parsing
 type Variable = String
 data AssignmentType = ToVariable Variable
                     | ToZero
@@ -30,8 +31,10 @@ toDataTree (Assignment v t) = Node ("Assignment " ++ show v ++ " := " ++ show t)
 toDataTree (ForLoop (v, t) end program) = Node ("ForLoop " ++ show v ++ " := " ++ show t ++ "to " ++ show end) [toDataTree program]
 toDataTree (Concatenation l r) = Node "" [toDataTree l, toDataTree r] 
 instance Show LoopProgram where
-    show x = (drawTree . toDataTree) x ++ "\n\n Printed Program :\n" ++ toProgramStructure [] x 
+    -- show x = (drawTree . toDataTree) x ++ "\n\n Printed Program :\n" ++ toProgramStructure [] x 
+    show = toProgramStructure [] 
 
+-- PARSER COMBINATORS FOR LOOP PROGRAMS
 wsfnb :: GenParser Char st a -> GenParser Char st a
 wsfnb t = do
     many space
@@ -157,11 +160,19 @@ loopProgram = wsfnb $ do
     
     return $ foldl Concatenation p ps
 
--- changeToLeft prev (Concatenation x y) = 
+
     
             
-
+-- The actuall interpretation of a compiled LoopProgram
+-- 
+-- With the program we have a map<libraryProgram, Syntax of the program> 
+-- and the result of the computation is map<string, Int> the final values
+-- of all variables after calculation
 interpret :: LoopProgram -> Map.Map String LoopProgram -> Map.Map Variable Int -> (Map.Map Variable Int)
+-- Change the value of v to the new one according to the assignment
+-- if a function call is in the result to add 
+-- ---> Stop calculation
+-- ---> Interpret the library function with arguments those of the function call
 interpret a@(Assignment v t) libs prevMap = 
     case t of
         ToVariable v' -> valInsert v v' id prevMap
@@ -187,6 +198,7 @@ interpret a@(Assignment v t) libs prevMap =
         valInsert v v' f prevMap = 
                 if v' `Map.notMember` prevMap then error ("unknwon variable " ++ v' ++ " in " ++ show a) else Map.insert v (f $ fromJust $ Map.lookup v' prevMap) prevMap
 
+-- iterate the interpretation of the body from startval to endval
 interpret a@(ForLoop (startvar, startval) endvar innerProgram) libs prevMap =
     let 
         m' = interpret (Assignment startvar startval) libs prevMap
@@ -206,7 +218,8 @@ interpret a@(ForLoop (startvar, startval) endvar innerProgram) libs prevMap =
             
     in
         loop startvar endvar m'
-            
+
+-- Interpret left then interpret right           
 interpret a@(Concatenation l r) libs prevMap = (interpret r libs . interpret l libs) prevMap
 
 
