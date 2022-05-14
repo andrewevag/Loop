@@ -19,7 +19,7 @@ A reduced version of Pascal to Loop and an interpreter for Loop, a language equi
 ```
 Comments are lines that start with "--"  
 
-## Θέματα Σημασιολογίας - semantic issues
+## Θέματα Σημασιολογίας για τον διερμηνέα της Loop
 ---
 
 - Τα προγράμματα που θέλουν input χρησιμοποιούν τις μεταβλητές i1, i2, i3, ...
