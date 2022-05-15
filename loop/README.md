@@ -127,26 +127,24 @@ o1 := div(n1, d);
 ### $\lfloor \sqrt{n} \rfloor$
 ``` bash
 x := i1;
--- k := 2;
-k := 1;
-k := k + 1;
-x := div(x, k);
-z := 0;
-for w := 1 to x do
-	k1 := mult(w, w);
+y := 1;
+y := y + 1;
+x1 := div(x, y);
+z := 1;
+r := 0;
+for w := 1 to x1 do
+	k1 := w + 1;
+	k1 := mult(k1, k1);
 
-	k2 := equals(k1, x);
-	for i := 1 to k2 do
-		z := w;
+-- if w^2 + 1 > x => w is the result but only the first time
+	b := greater(k1, x);
+	b := and(b, z);
+	for l := 1 to b do
+		r := w;
+-- flip z to 0 because it acts as a boolean the first
+-- time we exceed x
+		z := 0;
 	done
-
-	k := ifzero(z);
-	k2 := greater(k1, x);
-	k := and(k2, k);
-	for i := 1 to k do 
-		z := w -1 ;
-	done
-
 done
-o1 := z;
+o1 := r;
 ```
