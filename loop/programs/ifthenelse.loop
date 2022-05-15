@@ -1,10 +1,10 @@
-z := g(x)
-y := ifzero(z)
+z := g(x);
+y := ifzero(z);
 for w := 1 to y do
 	h1(x);
 done
 
-y1 := ifnzero(z)
+y1 := ifnzero(z);
 for w := 1 to y1 do
 	h2(x);
 done
