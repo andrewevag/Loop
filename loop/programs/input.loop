@@ -17,3 +17,4 @@ z := z + 1;
 o1 := encode(y, z);
 o2 := decode1(o1);
 o3 := sqrt(x);
+o4 := decode2(o1);

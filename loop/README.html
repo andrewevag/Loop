@@ -1,0 +1,281 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/default.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markdown-it-texmath/css/texmath.min.css">
+<link rel="stylesheet" href="file:////home/andreas/.vscode/extensions/goessner.mdmath-2.7.4/themes/default/style.css">
+
+</head>
+<body class="markdown-body">
+<h1 dir="auto" id="loop">Loop</h1>
+<p dir="auto">Όλα τα προγράμματα έχουν γραφεί με την υπόθεση ότι input του προγράμματος είναι στις μεταβλητές i1, i2, ... και output στις μεταβλητές o1, o2, ... για να επιβεβαιωθεί η ορθότητα τους σε έναν διερμηνέα.</p>
+<p dir="auto"><strong>Σχόλια</strong> θεωρούνται γραμμές που ξεκινούν με &quot;--&quot;</p>
+<h2 dir="auto" id="1">1.</h2>
+<h3 dir="auto" id="multx-y">mult(x, y)</h3>
+<pre><code class="code-line language-bash" dir="auto"><div>y := i1;
+z := i2;
+
+x := 0;
+<span class="hljs-keyword">for</span> w := 1 to z <span class="hljs-keyword">do</span>
+	x := add(x, y);
+<span class="hljs-keyword">done</span>
+o1 := x;
+</div></code></pre>
+<h3 dir="auto" id="subx-y">sub(x, y)</h3>
+<pre><code class="code-line language-bash" dir="auto"><div>x := i1;
+y := i2;
+<span class="hljs-keyword">for</span> w := 1 to y <span class="hljs-keyword">do</span>
+	x := x - 1;
+<span class="hljs-keyword">done</span>
+o1 := x;
+</div></code></pre>
+<h3 dir="auto" id="ifzerox-y">ifzero(x, y)</h3>
+<pre><code class="code-line language-bash" dir="auto"><div>x := i1;
+y := 1;
+<span class="hljs-keyword">for</span> w := 1 to x <span class="hljs-keyword">do</span>
+	y := y - 1;
+<span class="hljs-keyword">done</span>
+o1 := y;
+</div></code></pre>
+<div  dir="auto" ></div>
+<div style="page-break-after: always;"></div>
+<h2 dir="auto" id="2">2.</h2>
+<h3 dir="auto" id="if-then-else">if then else</h3>
+<pre><code class="code-line language-bash" dir="auto"><div>z := g(x);
+y := ifzero(z);
+<span class="hljs-keyword">for</span> w := 1 to y <span class="hljs-keyword">do</span>
+	h1(x);
+<span class="hljs-keyword">done</span>
+
+y1 := ifnzero(z);
+<span class="hljs-keyword">for</span> w := 1 to y1 <span class="hljs-keyword">do</span>
+	h2(x);
+<span class="hljs-keyword">done</span>
+</div></code></pre>
+<div  dir="auto" ></div>
+<div style="page-break-after: always;"></div>
+<h2 dir="auto" id="3">3.</h2>
+<h3 dir="auto" id="divx-y">div(x, y)</h3>
+<pre><code class="code-line language-bash" dir="auto"><div>x := i1;
+y := i2;
+
+-- <span class="hljs-keyword">if</span> divisor = 0 =&gt; output = 0
+z := ifzero(y);
+<span class="hljs-keyword">for</span> w := 1 to z <span class="hljs-keyword">do</span>
+	o1 := 0;
+<span class="hljs-keyword">done</span>
+
+z := ifnzero(y);
+r := 0;
+-- <span class="hljs-keyword">if</span> divisor != 0 =&gt; division
+<span class="hljs-keyword">for</span> w := 1 to z <span class="hljs-keyword">do</span>
+	x1 := x;
+	
+	<span class="hljs-keyword">for</span> i := 1 to x <span class="hljs-keyword">do</span>
+		
+		x2 := greater(x1, y);
+		x3 := equals(x1, y);
+		x2 := or(x2, x3);
+-- <span class="hljs-keyword">if</span> &gt;= subtract &amp;&amp; increment counter r
+		<span class="hljs-keyword">for</span> j := 1 to x2 <span class="hljs-keyword">do</span>
+			x1 := sub(x1, y); 
+			r := r + 1;
+		<span class="hljs-keyword">done</span>
+
+	<span class="hljs-keyword">done</span>
+	o1 := r;
+<span class="hljs-keyword">done</span>
+</div></code></pre>
+<div  dir="auto" ></div>
+<div style="page-break-after: always;"></div>
+<h2 dir="auto" id="4">4.</h2>
+<h3 dir="auto" id="xy---pow"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>x</mi><mi>y</mi></msup></mrow><annotation encoding="application/x-tex">x^y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6644em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">y</span></span></span></span></span></span></span></span></span></span></span> - pow</h3>
+<pre><code class="code-line language-bash" dir="auto"><div>x := i1;
+y := i2;
+
+x1 := 1;
+<span class="hljs-keyword">for</span> w := 1 to y <span class="hljs-keyword">do</span>
+	x1 := mult(x1, x);
+<span class="hljs-keyword">done</span>
+o1 := x1;
+
+-- this can be faster by x &lt;- x * x;
+</div></code></pre>
+<h3 dir="auto" id="n"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo stretchy="false">!</mo></mrow><annotation encoding="application/x-tex">n!</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">n</span><span class="mclose">!</span></span></span></span></h3>
+<p dir="auto"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo stretchy="false">!</mo><mo>=</mo><mn>1</mn><mo separator="true">,</mo><mi>n</mi><mo stretchy="false">!</mo><mo>=</mo><mi>n</mi><mo>∗</mo><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">!</mo></mrow><annotation encoding="application/x-tex">0! = 1, n! = n * (n-1)!</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord">0</span><span class="mclose">!</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">n</span><span class="mclose">!</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4653em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)!</span></span></span></span></p>
+<pre><code class="code-line language-bash" dir="auto"><div>x := i1;
+z := 1;
+<span class="hljs-keyword">for</span> w := 1 to x <span class="hljs-keyword">do</span>
+	z := mult(z, w);
+<span class="hljs-keyword">done</span>
+
+o1 := z;
+</div></code></pre>
+<h3 dir="auto" id="binomna"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo fence="true">(</mo><mfrac linethickness="0px"><mi>n</mi><mi>a</mi></mfrac><mo fence="true">)</mo></mrow><annotation encoding="application/x-tex">\binom{n}{a}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2em;vertical-align:-0.35em;"></span><span class="mord"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size1">(</span></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7454em;"><span style="top:-2.355em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">a</span></span></span></span><span style="top:-3.144em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size1">)</span></span></span></span></span></span></h3>
+<p dir="auto"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo fence="true">(</mo><mfrac linethickness="0px"><mi>n</mi><mi>a</mi></mfrac><mo fence="true">)</mo></mrow><mo>=</mo><mfrac><mrow><mi>n</mi><mo stretchy="false">!</mo></mrow><mrow><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mi>a</mi><mo stretchy="false">)</mo><mo stretchy="false">!</mo><mi>a</mi><mo stretchy="false">!</mo></mrow></mfrac></mrow><annotation encoding="application/x-tex">\binom{n}{a} = \frac{n!}{(n-a)! a!}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2em;vertical-align:-0.35em;"></span><span class="mord"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size1">(</span></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7454em;"><span style="top:-2.355em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">a</span></span></span></span><span style="top:-3.144em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size1">)</span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.4001em;vertical-align:-0.52em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8801em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathnormal mtight">n</span><span class="mbin mtight">−</span><span class="mord mathnormal mtight">a</span><span class="mclose mtight">)!</span><span class="mord mathnormal mtight">a</span><span class="mclose mtight">!</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mclose mtight">!</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></p>
+<pre><code class="code-line language-bash" dir="auto"><div>n := i1;
+k := i2;
+n1 := factorial(n);
+k1 := factorial(k);
+d := sub(n, k);
+d := factorial(d);
+d := mult(d, k1);
+o1 := div(n1, d);
+</div></code></pre>
+<h3 dir="auto" id="lfloor-sqrtn-rfloor"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">⌊</mo><msqrt><mi>n</mi></msqrt><mo stretchy="false">⌋</mo></mrow><annotation encoding="application/x-tex">\lfloor \sqrt{n} \rfloor</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0503em;vertical-align:-0.25em;"></span><span class="mopen">⌊</span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8003em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="padding-left:0.833em;"><span class="mord mathnormal">n</span></span></span><span style="top:-2.7603em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg xmlns="http://www.w3.org/2000/svg" width='400em' height='1.08em' viewBox='0 0 400000 1080' preserveAspectRatio='xMinYMin slice'><path d='M95,702
+c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
+c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
+c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
+s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
+c69,-144,104.5,-217.7,106.5,-221
+l0 -0
+c5.3,-9.3,12,-14,20,-14
+H400000v40H845.2724
+s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
+c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
+M834 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2397em;"><span></span></span></span></span></span><span class="mclose">⌋</span></span></span></span></h3>
+<p dir="auto">Ο αλγόριθμος είναι <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>μ</mi><mi>w</mi><mo stretchy="false">(</mo><mo stretchy="false">(</mo><mi>w</mi><mo>+</mo><mn>1</mn><msup><mo stretchy="false">)</mo><mn>2</mn></msup><mo>&gt;</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">μw((w+1)^2 &gt; x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">μ</span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mopen">((</span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span></span> το οποίο όμως φράζεται από το <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mi mathvariant="normal">/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">x/2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">x</span><span class="mord">/2</span></span></span></span> άρα υπολογίζεται με μία for loop ως εκεί.</p>
+<pre><code class="code-line language-bash" dir="auto"><div>x := i1;
+y := 1;
+y := y + 1;
+x1 := div(x, y);
+z := 1;
+r := 0;
+<span class="hljs-keyword">for</span> w := 1 to x1 <span class="hljs-keyword">do</span>
+	k1 := w + 1;
+	k1 := mult(k1, k1);
+
+-- w^2 + 1 &gt; x =&gt; w is the result but only the first time
+	b := greater(k1, x);
+	b := and(b, z);
+	<span class="hljs-keyword">for</span> l := 1 to b <span class="hljs-keyword">do</span>
+		r := w;
+-- flip z to 0 because it acts as a boolean the first
+-- time we exceed x
+		z := 0;
+	<span class="hljs-keyword">done</span>
+<span class="hljs-keyword">done</span>
+o1 := r;
+</div></code></pre>
+<h3 dir="auto" id="%CE%B2%CE%BF%CE%B7%CE%B8%CE%B7%CF%84%CE%B9%CE%BA%CE%AC-%CF%80%CF%81%CE%BF%CE%B3%CF%81%CE%AC%CE%BC%CE%BC%CE%B1%CF%84%CE%B1-%CF%80%CE%BF%CF%85-%CF%87%CF%81%CE%B7%CF%83%CE%B9%CE%BC%CE%BF%CF%80%CE%BF%CE%B9%CE%AE%CE%B8%CE%B7%CE%BA%CE%B1%CE%BD-%CF%83%CF%84%CE%B1-%CF%80%CE%B1%CF%81%CE%B1%CF%80%CE%AC%CE%BD%CF%89">Βοηθητικά προγράμματα που χρησιμοποιήθηκαν στα παραπάνω</h3>
+<h3 dir="auto" id="greater">greater (&gt;)</h3>
+<pre><code class="code-line language-bash" dir="auto"><div>x := i1;
+y := i2;
+d := sub(x, y);
+o1 := ifnzero(d);
+</div></code></pre>
+<h3 dir="auto" id="and">and</h3>
+<pre><code class="code-line language-bash" dir="auto"><div>x := i1;
+y := i2;
+o1 := 0;
+x1 := ifnzero(x);
+<span class="hljs-keyword">for</span> w := 1 to x1 <span class="hljs-keyword">do</span>
+	x2 := ifnzero(y);
+	<span class="hljs-keyword">for</span> i := 1 to x2 <span class="hljs-keyword">do</span>
+		o1 := 1;
+	<span class="hljs-keyword">done</span>
+<span class="hljs-keyword">done</span>
+</div></code></pre>
+<div  dir="auto" ></div>
+<div style="page-break-after: always;"></div>
+<h2 dir="auto" id="5">5.</h2>
+<p dir="auto">Αρχικά θα υπολογίσουμε την βοηθητική mod</p>
+<h3 dir="auto" id="modx-y">mod(x, y)</h3>
+<pre><code class="code-line language-bash" dir="auto"><div>x := i1;
+y := i2;
+z := ifzero(y);
+-- <span class="hljs-keyword">if</span> y == 0 -&gt; <span class="hljs-built_in">return</span> 0
+<span class="hljs-keyword">for</span> w := 1 to z <span class="hljs-keyword">do</span>
+	o1 := 0;
+<span class="hljs-keyword">done</span>
+z := ifnzero(y);
+-- <span class="hljs-keyword">if</span> y != 0 -&gt; <span class="hljs-built_in">return</span> (x - y * div(x, y))
+<span class="hljs-keyword">for</span> w := 1 to z <span class="hljs-keyword">do</span>
+	
+	q := div(x, y);
+	p := mult(y, q);
+	r := sub(x, p);
+	o1 := r;	
+<span class="hljs-keyword">done</span>
+</div></code></pre>
+<h3 dir="auto" id="i-divisiblem-n">i. divisible(m, n)</h3>
+<pre><code class="code-line language-bash" dir="auto"><div>-- <span class="hljs-keyword">if</span> mod(x, y) == 0 =&gt; <span class="hljs-built_in">return</span> <span class="hljs-literal">true</span> <span class="hljs-keyword">else</span> <span class="hljs-literal">false</span>
+m := i2;
+n := i1;
+z := ifnzero(n);
+
+<span class="hljs-keyword">for</span> w := 1 to z <span class="hljs-keyword">do</span>
+	m := mod(m, n);
+	o1 := ifzero(m);
+<span class="hljs-keyword">done</span>
+z := ifzero(n);
+<span class="hljs-keyword">for</span> w := 1 to z <span class="hljs-keyword">do</span>
+	o1 := 0;
+<span class="hljs-keyword">done</span>
+</div></code></pre>
+<h3 dir="auto" id="ii-primen">ii. prime(n)</h3>
+<pre><code class="code-line language-bash" dir="auto"><div>n := i1;
+n1 := sqrt(n);
+z := 0;
+<span class="hljs-keyword">for</span> w := 1 to n1 <span class="hljs-keyword">do</span>
+	w1 := w + 1;
+	k := divisible(w1, n);
+	<span class="hljs-keyword">for</span> i := 1 to k <span class="hljs-keyword">do</span>
+		z := 1;
+	<span class="hljs-keyword">done</span>
+
+<span class="hljs-keyword">done</span>
+o1 := ifzero(z);
+</div></code></pre>
+<h3 dir="auto" id="iii-pn---nthprimen">iii. p(n) - nthprime(n)</h3>
+<pre><code class="code-line language-bash" dir="auto"><div>-- find an upperbound 
+-- <span class="hljs-keyword">for</span> the nth prime to count to that
+-- p(n) -&gt; nth prime
+-- p(n+1) -&gt; [p(n)+1, p(n)!+1] 
+-- p(1) = 2.
+-- p(n+1) -&gt; least prime <span class="hljs-keyword">in</span> [p(n)+1, p(n)!+1]
+
+n := i1;
+n := n-1;
+
+-- z = 2; the first prime
+z := 1;
+z := z + 1;
+
+
+<span class="hljs-keyword">for</span> w := 1 to n <span class="hljs-keyword">do</span>
+	
+	l := z + 1;
+	u := factorial(z);
+	u := u + 1;
+	d := sub(u, l);
+	f := 0;
+	<span class="hljs-keyword">for</span> i := 0 to d <span class="hljs-keyword">do</span>
+		t := add(i, l);
+		t1 := prime(t);
+		t2 := ifzero(f);
+		t2 := and(t1, t2);
+		<span class="hljs-keyword">for</span> j := 1 to t2 <span class="hljs-keyword">do</span>
+			f := 1;
+			z := t;
+			d := 0;
+		<span class="hljs-keyword">done</span>
+	<span class="hljs-keyword">done</span>
+<span class="hljs-keyword">done</span>
+o1 := z;
+
+-- can also 
+-- hold the product of primes less than the current prime
+-- and keep that + 1 instead of p(n)!+1
+</div></code></pre>
+<div  dir="auto" ></div>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<div  dir="auto" ></div>
+<script type="text/x-mathjax-config">
+	MathJax.Hub.Config({ tex2jax: {inlineMath: [['$', '$']]}, messageStyle: "none" });
+</script>
+</body>
+</html>
