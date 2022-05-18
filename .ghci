@@ -1,3 +1,3 @@
-:set -i/home/andreas/Loop/loop
-:set -i/home/andreas/Loop/Pascal
+:set -i/home/andreas/Projects/Loop/loop
+:set -i/home/andreas/Projects/Loop/Pascal
 :load RPtoLoop.hs
