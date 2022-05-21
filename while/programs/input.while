@@ -1,0 +1,12 @@
+x1 := 1;
+x1 := x1 + 1;
+x1 := x1 + 1;
+x1 := x1 + 1;
+x1 := x1 + 1;
+x0 := 1;
+x0 := x0 + 1;
+o1 := add(x0, x1);
+o2 := ifzero(x1);
+o3 := ifzero(o2);
+subres := sub(x1, x0);
+subres1 := sub(o1, x1);
