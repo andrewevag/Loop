@@ -1,0 +1,7 @@
+x := i1;
+y := i2;
+while y != 0 do
+	x := x + 1;
+	y := y - 1;
+end;
+o1 := x;

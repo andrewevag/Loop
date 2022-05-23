@@ -1,0 +1,12 @@
+x := i1;
+y := i2;
+if not y do
+	o1 := 0;
+else do	
+	q := div(x, y);
+	p := mult(y, q);
+	r := sub(x, p);
+	o1 := r;	
+end;
+
+

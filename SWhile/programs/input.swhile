@@ -1,0 +1,18 @@
+z := 1;
+z := z + 1;
+x := 0;
+y := 0;
+k := 0;
+for w := y to z do 
+	x := 1;
+	x := x + 1;
+	if k do
+		x := x + 1;
+		y := x - 1;
+	else do
+		y := add(z, x);
+		y := mult(y, y);
+	end;
+end;
+z := div(y, z);
+o1 := ifzero(z);

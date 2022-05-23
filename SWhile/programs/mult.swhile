@@ -1,0 +1,8 @@
+x := i1;
+y := i1;
+z := 0;
+while y != 0 do
+	z := add(z, x);
+	y := y - 1;
+end;
+o1 := z;

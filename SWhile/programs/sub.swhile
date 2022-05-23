@@ -1,0 +1,6 @@
+x := i1;
+y := i2;
+for w := 1 to y do
+	x := x - 1;
+end;
+o1 := x;

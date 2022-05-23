@@ -1,0 +1,8 @@
+m := i2;
+n := i1;
+if not n do
+	m := mod(m, n);
+	o1 := ifzero(m);
+else do
+	o1 := 0;
+end;

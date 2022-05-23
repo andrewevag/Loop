@@ -1,0 +1,8 @@
+x := i1;
+y := i2;
+o1 := 1;
+if not x do
+	if not y do
+		o1 := 0;
+	end;
+end;

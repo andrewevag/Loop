@@ -1,0 +1,6 @@
+x := i1;
+if not x do
+	o1 := 1;
+else do
+	o1 := 0;
+end;
