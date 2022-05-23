@@ -1,0 +1,10 @@
+ case v of
+                "add"  -> f (+)
+                "sub"  -> f (-)
+                "mult" -> f (*)
+                "div"  -> f (div)
+                "mod"  -> f (Prelude.mod)
+                _      -> Map.insert v (fromJust $ Map.lookup "o1" (interpret p libs (Map.fromList inputs))) vars
+                where
+                    inputs = flip zip (map (fromJust . flip Map.lookup vars) args) $ zipWith (\l r -> l ++ show r) (repeat "i") [1..] 
+                    f g = Map.insert v ((fromJust $ lookup (args !! 0) inputs) `g` (fromJust $ lookup (args !! 1) inputs)) vars
