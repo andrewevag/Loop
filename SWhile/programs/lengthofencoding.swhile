@@ -1,6 +1,6 @@
-// We expect the code to be 2^(length+1)*3^(a_1 + 1) ...
 code := i1;
 constant1 := 1;
+// We expect the code to be 2^(length+1)*3^(a_1 + 1) ...
 constant2 := constant1 + 1;
 o1 := greatestpowthatdivides(constant2, code);
 o1 := o1 - 1;
