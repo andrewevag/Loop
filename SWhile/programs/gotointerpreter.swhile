@@ -1,0 +1,75 @@
+programcode := i1;
+inputencode := i2;
+currentLabel := 0;
+maxLebel := findmaxlabel(p);
+
+//constants
+constant0 := 0;
+constant1 := 1;
+constant2 := constant1 + 1;
+constant3 := constant2 + 1;
+constant4 := constant3 + 1;
+constant5 := constant4 + 1;
+
+r := lesseq(currentLabel, maxlabel);
+while r != 0 do
+	//first we need to find the instruction at the current label
+	currinst := getlabel(currentLabel, p);
+	
+	//now we analyse the instruction if execute it accordingly
+	whichInst := getnthdecode(constant1, currinst);
+	eq1 := equals(whichInst, constant1);
+	if not eq1 do
+		//here we have an encoding of the form
+		// C(0, i, C(assignment), j);
+		ass := getnthdecode(constant3, whichInst);
+		currentLabel := getnthdecode(constant4, whichInst);
+
+		assType := getnthdecode(constant1, ass);
+		if not assType do //aka if assType != 0 ==> non-empty instruction
+			eqa1 := equals(assType, constant1);
+			if eqa1 then do
+				// x_i := 0; (C(1, i, 0));
+				i := getnthdecode(constant2, ass);
+				inputencode := changenthcode(i, inputencode, constant0);
+			else do
+				//x_i := x_j; (C(2, i, j))
+				//x_i := x_j + 1; C(3, i, j)
+				//x_i := x_j + 1; C(4, i, j)
+				i := getnthdecode(constant2, ass);
+				j := getnthdecode(constant3, ass);
+				jthval := getnthdecode(j, inputencode);
+				
+				eqa2 := equals(assType, constant2);
+				if eqa2 then do
+					inputencode := changenthcode(i, inputencode, jthval);	
+				else do
+					eqa3 := equals(assType, constant3);
+					if eqa3 then do
+						jthval := jthval + 1;
+						inputencode := changenthcode(i, inputencode, jthval);
+					else do
+						jthval := jthval - 1;
+						inputencode := changenthcode(i, inputencode, jthval);
+					end;
+				end;
+			end;
+		end;
+
+	else do
+		// C(1, i, m, j, k);
+		m := getnthdecode(constant3, whichInst);
+		mthval := getnthdecode(m, inputencode);
+		eq0 := equals(mthval, constant0);
+		if not eq0 do
+			// here x_m <> 0 so we go to label j
+			currentLabel := getnthdecode(constant4, whichInst);
+		else do
+			// here x_m == 0 so we go to label k
+			currentLabel := getnthdecode(constant5, whichInst);
+		end;
+	end;
+	r := lesseq(currentLabel, maxlabel);
+end;
+// the output is the value of the variables
+o1 := inputencode;

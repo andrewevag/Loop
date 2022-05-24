@@ -1,0 +1,12 @@
+n := i1;
+m := i2;
+t := n;
+o1 := 0;
+r := 1;
+while r != 0 do
+	r := divisible(m, t);
+	t := mult(t, n);
+	if r do
+		o1 := o1 + 1;
+	end;
+end;

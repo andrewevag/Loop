@@ -1,0 +1,22 @@
+x := i1;
+x1 := x;
+x := x-1;
+o1 := 1;
+constant1 := 1;
+eqc1 := equals(constant1, x1);
+constant2 := 1;
+constant2 := constant2+1;
+eqc := equals(constant2, x1);
+if eqc1 do
+	o1 := 0;
+else do
+	if not eqc do
+		w := 1;
+		for w := w+1 to x do
+			z := divisible(x1, w);
+			if z do
+				o1 := 0;
+			end;
+		end;
+	end;
+end;

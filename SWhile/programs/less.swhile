@@ -1,0 +1,10 @@
+x := i1;
+y := i2;
+gr := greater(x, y);
+eq := equals(x, y);
+r := or(gr, eq);
+if not r do
+	o1 := 1;
+else do
+	o1 := 0;
+end;

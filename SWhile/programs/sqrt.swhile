@@ -1,0 +1,13 @@
+x := i1;
+r := 1;
+y := 1;
+while r != 0 do
+	y1 := mult(y, y);
+	y1 := y1 + 1;
+	y1 := greater(y1, x);
+	if y1 do
+		o1 := y;
+		r := 0;
+	end;
+	y := y + 1;
+end;

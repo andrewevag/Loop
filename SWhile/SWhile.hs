@@ -184,9 +184,10 @@ swhileProgram = foldl1 Concatenation <$> endBy1 (try assignment <|> try whileSch
 -- Similar strategy with loop programs and holding libraries
 -- inputs in i1, ..., in variables
 -- outputs in o1.
+toZeroOne :: (Integer -> Integer -> Bool) -> (Integer -> Integer -> Integer)
+toZeroOne f = \x y -> if f x y then 1 else 0
 
-
-interpret :: SWhileProgram -> Map.Map String SWhileProgram -> Map.Map L.Variable Int -> (Map.Map L.Variable Int)
+interpret :: SWhileProgram -> Map.Map String SWhileProgram -> Map.Map L.Variable Integer -> (Map.Map L.Variable Integer)
 interpret wp@(Assignment v (L.ToProgram v' args)) libs vars = 
     case (Map.lookup v' libs, and (map (isJust . flip Map.lookup vars) args)) of
         (Nothing, _)    -> error ("No program " ++ v' ++ " given as a library.")
@@ -194,10 +195,14 @@ interpret wp@(Assignment v (L.ToProgram v' args)) libs vars =
         (Just p, True)  -> 
              case v' of
                 "add"  -> f (+)
-                "sub"  -> f (-)
+                "sub"  -> f (\x y -> if x - y < 0 then 0 else x-y)
                 "mult" -> f (*)
                 "div"  -> f (div)
                 "mod"  -> f (mod)
+                "equals"  -> f (toZeroOne (==))
+                "greater" -> f (toZeroOne (>)) -- composition doesn't work??
+                "less"    -> f (toZeroOne (<))
+                "pow"     -> f (^)
                 _      -> Map.insert v (fromJust $ Map.lookup "o1" (interpret p libs (Map.fromList inputs))) vars
                 where
                     f g = Map.insert v ((fromJust $ lookup ("i1") inputs) `g` (fromJust $ lookup ("i2") inputs)) vars
@@ -205,7 +210,7 @@ interpret wp@(Assignment v (L.ToProgram v' args)) libs vars =
                     
 
 
-interpret (Assignment v t) libs vars = L.interpret (L.Assignment v t) Map.empty vars
+interpret (Assignment v t) libs vars = Map.map toInteger $ L.interpret (L.Assignment v t) Map.empty (Map.map fromInteger vars)
 
 interpret (WhileScheme v body) libs vars = 
     case (Map.lookup v vars) of

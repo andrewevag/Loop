@@ -1,0 +1,8 @@
+x := i1;
+y := i2;
+k := greater(x, y);
+if k do
+	o1 := x;
+else do
+	o1 := y;
+end;

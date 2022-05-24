@@ -1,0 +1,18 @@
+// we suppose that the label exists in the code
+targetlbl := i1;
+code := i2;
+length := lengthofencoding(code);
+constant1 := 1;
+constant2 := constant1 + 1;
+for w := 1 to length do
+	d := getnthdecode(w, p);
+	dins := getnthdecode(constant1, d);
+	// C(0, i, C_f(assignment), j) or
+	// C(1, i, m, j, k)
+	// so in every case it is the second encoding value that is the required label
+	lbl := getnthdecode(constant2, dins);
+	eq := equals(targetlbl, lbl);
+	if eq then
+		o1 := dins;
+	end;
+end;

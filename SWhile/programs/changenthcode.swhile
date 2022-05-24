@@ -1,0 +1,16 @@
+// change nth decode to a new value
+n := i1;
+code := i2;
+newval := i3;
+
+nthcode := getnthdecode(n, code);
+// this refers to p_{n+1} ^ (nthcode+1)
+// so we need to divide the code by p_{n+1}^{nthcode}
+// and then multiply it by p_{n+1}^{newvalue}
+n := n + 1;
+p := nthprime(n);
+divisor := pow(p, nthcode);
+code := div(code, divisor);
+multiplier := pow(p, newval);
+code := mult(code, multiplier);
+o1 := code;

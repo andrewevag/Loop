@@ -1,7 +1,8 @@
 x := i1;
 y := i2;
 z := sub(x, y);
-o1 := 0;
 if z do
 	o1 := 1;
+else do
+	o1 := 0;
 end;

@@ -1,0 +1,24 @@
+n := i1;
+
+constant1 := 1;
+constant2 := constant1 + 1;
+r := equals(constant1, n);
+p := constant2;
+if r do
+	o1 := p;
+else do
+	for w := constant1+1 to n do
+		pdouble := mult(constant2, p);
+		c := p + 1;
+		np := 1;
+		while np != 0 do
+			np := prime(c);
+			np := ifzero(np);
+			if not np do
+				p := c;
+			end;
+			c := c + 1;
+		end;
+	end;
+	o1 := p;
+end;

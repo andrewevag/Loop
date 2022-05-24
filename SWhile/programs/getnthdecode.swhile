@@ -1,0 +1,6 @@
+n := i1;
+code := i2;
+n := n + 1;
+p := nthprime(n);
+o1 := greatestpowthatdivides(n, code);
+o1 := o1 - 1;

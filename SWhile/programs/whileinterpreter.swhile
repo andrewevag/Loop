@@ -1,0 +1,11 @@
+programcode := i1;
+inputs := i2;
+
+//Constants
+constant0 := 0;
+constant1 := 1;
+constant2 := constant1 + 1;
+constant3 := constant2 + 1;
+constant4 := constant3 + 1;
+constant5 := constant4 + 1;
+

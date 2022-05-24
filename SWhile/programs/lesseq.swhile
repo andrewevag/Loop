@@ -1,0 +1,10 @@
+x := i1;
+y := i2;
+l := less(x, y);
+eq := eq(x, y);
+r := or(l, eq);
+if r do 
+	o1 := 1;
+else do
+	o1 := 0;
+end;
