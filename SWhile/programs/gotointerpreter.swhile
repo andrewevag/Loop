@@ -26,10 +26,9 @@ while r != 0 do
 		currentLabel := getnthdecode(constant4, whichInst);
 
 		assType := getnthdecode(constant1, ass);
-		if not assType do 
-			//aka if assType != 0 ==> non-empty instruction
+		if not assType do //aka if assType != 0 ==> non-empty instruction
 			eqa1 := equals(assType, constant1);
-			if eqa1 then do
+			if eqa1 do
 				// x_i := 0; (C(1, i, 0));
 				i := getnthdecode(constant2, ass);
 				inputencode := changenthcode(i, inputencode, constant0);
@@ -42,11 +41,11 @@ while r != 0 do
 				jthval := getnthdecode(j, inputencode);
 				
 				eqa2 := equals(assType, constant2);
-				if eqa2 then do
+				if eqa2 do
 					inputencode := changenthcode(i, inputencode, jthval);	
 				else do
 					eqa3 := equals(assType, constant3);
-					if eqa3 then do
+					if eqa3 do
 						jthval := jthval + 1;
 						inputencode := changenthcode(i, inputencode, jthval);
 					else do
