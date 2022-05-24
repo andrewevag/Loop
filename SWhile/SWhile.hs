@@ -191,9 +191,18 @@ interpret wp@(Assignment v (L.ToProgram v' args)) libs vars =
     case (Map.lookup v' libs, and (map (isJust . flip Map.lookup vars) args)) of
         (Nothing, _)    -> error ("No program " ++ v' ++ " given as a library.")
         (Just _, False) -> error ("One of the variables is not defined")
-        (Just p, True)  -> Map.insert v (fromJust $ Map.lookup "o1" (interpret p libs (Map.fromList inputs))) vars
-            where
-                inputs = flip zip (map (fromJust . flip Map.lookup vars) args) $ zipWith (\l r -> l ++ show r) (repeat "i") [1..] 
+        (Just p, True)  -> 
+             case v' of
+                "add"  -> f (+)
+                "sub"  -> f (-)
+                "mult" -> f (*)
+                "div"  -> f (div)
+                "mod"  -> f (mod)
+                _      -> Map.insert v (fromJust $ Map.lookup "o1" (interpret p libs (Map.fromList inputs))) vars
+                where
+                    f g = Map.insert v ((fromJust $ lookup ("i1") inputs) `g` (fromJust $ lookup ("i2") inputs)) vars
+                    inputs = flip zip (map (fromJust . flip Map.lookup vars) args) $ zipWith (\l r -> l ++ show r) (repeat "i") [1..]
+                    
 
 
 interpret (Assignment v t) libs vars = L.interpret (L.Assignment v t) Map.empty vars

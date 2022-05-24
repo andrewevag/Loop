@@ -3,16 +3,18 @@ z := z + 1;
 x := 0;
 y := 0;
 k := 0;
-for w := y to z do 
-	x := 1;
+x := 1;
+x := x + 1;
+if k do
 	x := x + 1;
-	if k do
-		x := x + 1;
-		y := x - 1;
-	else do
-		y := add(z, x);
-		y := mult(y, y);
-	end;
+	y := x - 1;
+else do
+	y := add(z, x);
+	y := mult(y, y);
+	y := y + 1;
+	y1 := div(y, z);
+	z := z+1;
+	y2 := mod(y, z);
 end;
 z := div(y, z);
 o1 := ifzero(z);
