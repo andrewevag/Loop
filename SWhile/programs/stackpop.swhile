@@ -1,0 +1,21 @@
+stack := i1;
+constant1 := 1;
+constant2 := constant1 + 1;
+
+size := greatestpowthatdivides(constant2, stack);
+//actually size === stack.size + 1 due to the plus one in exponents
+// remove old value @ p_{size+1}
+p := nthprime(size);
+primep := greatestpowthatdivides(p, stack);
+divisor := pow(p, primep);
+stack := div(stack, divisor);
+
+
+//change the size
+sizep := pow(constant2, size);
+stack := div(stack, sizep);
+size := size -1;
+sizep := pow(constant2, size);
+stack := mult(stack, sizep);
+//return the resulting stack
+o1 := stack;

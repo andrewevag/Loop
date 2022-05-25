@@ -1,0 +1,4 @@
+stack := i1;
+// get top value in stack
+size := lengthofencoding(stack);
+o1 := getnthdecode(size, stack);

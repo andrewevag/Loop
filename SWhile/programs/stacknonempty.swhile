@@ -1,0 +1,8 @@
+stack := i1;
+// if the size of the stack is zero return false
+// else we have elements
+constant1 := 1;
+constant2 := constant1 + 1;
+size := greatestpowthatdivides(constant2, stack);
+size := size - 1;
+o1 := ifnzero(size);

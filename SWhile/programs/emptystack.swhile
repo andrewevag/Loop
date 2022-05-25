@@ -1,0 +1,5 @@
+constant1 := 1;
+constant2 := constant1 + 1;
+// p_1^{1} that is the empty stack
+// or 2
+o1 := constant2;

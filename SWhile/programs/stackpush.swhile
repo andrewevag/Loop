@@ -1,0 +1,27 @@
+stack := i1;
+val := i2;
+
+size := lengthofencoding(stack);
+nsize := size + 1;
+
+constant1 := 1;
+constant2 := constant1 + 1;
+
+//fix size first
+//stack == 2^{size+1}3^{..}...p_{size+1}^{..}
+//remove old size
+sizeinpow := greatestpowthatdivides(constant2, stack);
+divisor := pow(constant2, sizeinpow);
+stack := div(stack, divisor);
+
+//add new size
+nsize := nsize + 1;
+multiplier := pow(constant2, nsize);
+stack := mult(stack, multiplier);
+
+//add new value
+p := nthprime(nsize);
+multiplier := pow(p, val);
+stack := mult(stack, multiplier);
+//return stack;
+o1 := stack;

@@ -9,3 +9,77 @@ constant3 := constant2 + 1;
 constant4 := constant3 + 1;
 constant5 := constant4 + 1;
 
+stack := constant2; //that is the empty stack
+stack := stackpush(stack, programcode);
+r := stacknonempty(stack);
+while r != 0 do
+	//get top of the stack
+	node := stacktop(stack);
+	stack := stackpop(stack);
+
+	t := getnthdecode(constant1, node);
+	if not t do
+		//here t = 0 so it is an assignment 
+		//so we immediately interpret it
+		t := getnthdecode(constant1, node);
+		t1 := equals(constant1, t);
+		t2 := equals(constant2, t);
+		t3 := equals(constant3, t);
+		if t1 do
+			//here C(0, 1, i) x_i := 0;
+			i := getnthdecode(constant3, node);
+			inputs := changenthcode(i, inputs, constant0);
+		else do
+			i := getnthdecode(constant3, node);
+			j := getnthdecode(constant4, node);
+			jthval := getnthdecode(j, inputs);
+			if t2 do
+				//here C(0, 2, i, j) x_i = x_j	
+				inputs := changenthcode(i, inputs, jthval);
+			else do
+				if t3 do
+					//here C(0, 3, i, j) x_i := x_j + 1;
+					jthval := jthval + 1;
+					inputs := changenthcode(i, inputs, jthval);
+				else do
+					jthval := jthval - 1;
+					inputs := changenthcode(i, inputs, jthval);
+				end;
+			end;
+		end;
+	else do
+		t := equals(t, constant1);
+		if t do
+			//here t = 1 so we are talking about (;)
+			//flip the turn of them and push
+			//them on the stack so that they 
+			//get interpreted in the right order
+			p1 := getnthdecode(constant2, node);
+			p2 := getnthdecode(constant3, node);
+			
+			stack := stackpush(stack, p2);
+			stack := stackpush(stack, p1);
+		else do
+			//here t = 2 so we have a loop
+			//we check if the loop variable is 0
+			//if it is then we do not push anything
+			//since the loop is over
+			//if it's not then we push back the while
+			//and one more the inner program inside of it
+			i := getnthdecode(constant2, node);
+			valofi := getnthdecode(i, inputs);
+			if valofi do
+				//here i != 0
+				//because if it is 0 we do nothing
+				inner := getnthdecode(constant3, node);
+				//push the inner to be interpreted once
+				//and then push the whole while again
+				stack := stackpush(stack, node);
+				stack := stackpush(stack, inner);
+			end;
+		end;
+	end;
+	r := stacknonempty(stack);
+end;
+//return the resulting variables
+o1 := inputs;
